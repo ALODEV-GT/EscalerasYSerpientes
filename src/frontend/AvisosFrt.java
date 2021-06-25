@@ -62,6 +62,7 @@ public class AvisosFrt extends javax.swing.JDialog {
         );
 
         mensajejLabel.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        mensajejLabel.setForeground(new java.awt.Color(1, 1, 1));
         mensajejLabel.setText("Mensaje");
 
         javax.swing.GroupLayout bgjPanelLayout = new javax.swing.GroupLayout(bgjPanel);
