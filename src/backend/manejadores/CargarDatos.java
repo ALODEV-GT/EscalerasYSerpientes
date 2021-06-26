@@ -7,6 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import backend.clases.Tablero;
+import backend.especiales.Avanza;
+import backend.especiales.Bajada;
+import backend.especiales.Especial;
+import backend.especiales.PierdeTurno;
+import backend.especiales.Retrocede;
+import backend.especiales.Subida;
+import backend.especiales.Tiradados;
 
 public class CargarDatos {
 
@@ -37,11 +44,17 @@ public class CargarDatos {
 
         if (seCreoTablero) {
             if (encabezado.equalsIgnoreCase("pierdeturno")) {
+                cargarPierdeTurno(campos);
             } else if (encabezado.equalsIgnoreCase("tiradados")) {
+                cargarTiradados(campos);
             } else if (encabezado.equalsIgnoreCase("avanza")) {
+                cargarAvanza(campos);
             } else if (encabezado.equalsIgnoreCase("retrocede")) {
+                cargarRetrocede(campos);
             } else if (encabezado.equalsIgnoreCase("subida")) {
+                cargarSubida(campos);
             } else if (encabezado.equalsIgnoreCase("bajada")) {
+                cargarBajada(campos);
             } else {
                 // LA LINEA NO TIENE UNA INSTRUCCION VALIDA
             }
@@ -56,27 +69,58 @@ public class CargarDatos {
         seCreoTablero = tablero.crearTablero();
     }
 
-    private void cargarPierdeTurno(ArrayList<String> campos){
-        
+    private void cargarPierdeTurno(ArrayList<String> campos) {
+        Especial especial = new PierdeTurno();
+        int fila = Integer.valueOf(campos.get(0));
+        int columna = Integer.valueOf(campos.get(1));
+        tablero.asignarEspecial(especial, fila, columna);
     }
 
-    private void cargarTiradados(ArrayList<String> campos){
+    private void cargarTiradados(ArrayList<String> campos) {
+        Especial especial = new Tiradados();
+        int fila = Integer.valueOf(campos.get(0));
+        int columna = Integer.valueOf(campos.get(1));
+        tablero.asignarEspecial(especial, fila, columna);
 
     }
 
-    private void cargarAvanza(ArrayList<String> campos){
-        
+    private void cargarAvanza(ArrayList<String> campos) {
+        int cantidadPosiciones = Integer.valueOf(campos.get(2));
+        Especial especial = new Avanza(cantidadPosiciones);
+        int fila = Integer.valueOf(campos.get(0));
+        int columna = Integer.valueOf(campos.get(1));
+        tablero.asignarEspecial(especial, fila, columna);
+
     }
 
     private void cargarRetrocede(ArrayList<String> campos){
+        int cantidadPosiciones = Integer.valueOf(campos.get(2));
+        Especial especial = new Retrocede(cantidadPosiciones)
+        int fila = Integer.valueOf(campos.get(0)) ;
+        int columna = Integer.valueOf(campos.get(1)) ;
+        tablero.asignarEspecial(especial, fila, columna);
         
     }
 
     private void cargarSubida(ArrayList<String> campos){
+        int posicionInicialX = Integer.valueOf(campos.get(0)) ;
+        int posicionInicialY = Integer.valueOf(campos.get(1)) ;
+        int posicionFinalX = Integer.valueOf(campos.get(0));
+        int posicionFinalY = Integer.valueOf(campos.get(0));
+
+        Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY)        
+        tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
         
     }
+
     private void cargarBajada(ArrayList<String> campos){
-        
+        int posicionInicialX = Integer.valueOf(campos.get(0)) ;
+        int posicionInicialY = Integer.valueOf(campos.get(1)) ;
+        int posicionFinalX = Integer.valueOf(campos.get(0));
+        int posicionFinalY = Integer.valueOf(campos.get(0));
+
+        Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY)        
+        tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);        
     }
 
     public ArrayList<String> extraerCampos(String lineaArchivo) {
