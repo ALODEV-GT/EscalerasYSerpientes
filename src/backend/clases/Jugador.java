@@ -1,4 +1,4 @@
-package backend;
+package backend.clases;
 
 public class Jugador {
 

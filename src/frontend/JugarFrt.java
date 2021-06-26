@@ -1,16 +1,20 @@
 package frontend;
 
+import backend.manejadores.CargarDatos;
 import java.awt.Color;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 public class JugarFrt extends javax.swing.JPanel {
-    
+
     private ManejadorVentanas parent;
-    
+    private CargarDatos cargarDatos = new CargarDatos();
+
     public JugarFrt(ManejadorVentanas parent) {
         this.parent = parent;
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -83,6 +87,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btCargarjLabel.setForeground(new java.awt.Color(1, 1, 1));
         btCargarjLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btCargarjLabel.setText("CARGAR TABLERO");
+        btCargarjLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btCargarjLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btCargarjLabelMouseClicked(evt);
@@ -115,6 +120,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btAceptarjLabel.setForeground(new java.awt.Color(1, 1, 1));
         btAceptarjLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btAceptarjLabel.setText("ACEPTAR");
+        btAceptarjLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btAceptarjLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btAceptarjLabelMouseClicked(evt);
@@ -149,6 +155,7 @@ public class JugarFrt extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("1");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -172,6 +179,7 @@ public class JugarFrt extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("3");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -195,6 +203,7 @@ public class JugarFrt extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("2");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -215,6 +224,7 @@ public class JugarFrt extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("4");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -239,6 +249,7 @@ public class JugarFrt extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("5");
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -264,6 +275,7 @@ public class JugarFrt extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(1, 1, 1));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("6");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -287,7 +299,7 @@ public class JugarFrt extends javax.swing.JPanel {
     private void btnRegresarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarjLabelMouseClicked
         parent.mostrarInicio(this);
     }//GEN-LAST:event_btnRegresarjLabelMouseClicked
-    
+
     private void btnRegresarjLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarjLabelMouseEntered
         bgRegresarjPanel.setBackground(new Color(255, 89, 94));
     }//GEN-LAST:event_btnRegresarjLabelMouseEntered
@@ -297,27 +309,36 @@ public class JugarFrt extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegresarjLabelMouseExited
 
     private void btCargarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCargarjLabelMouseClicked
-        // TODO add your handling code here:
+        JFileChooser fileChosser = new JFileChooser();
+        int seleccion = fileChosser.showOpenDialog(this);
+
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File archivo = fileChosser.getSelectedFile();
+        }
     }//GEN-LAST:event_btCargarjLabelMouseClicked
 
     private void btCargarjLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCargarjLabelMouseEntered
-        bgCargarjPanel.setBackground(new Color(138,201,38));
+        bgCargarjPanel.setBackground(new Color(138, 201, 38));
     }//GEN-LAST:event_btCargarjLabelMouseEntered
 
     private void btCargarjLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCargarjLabelMouseExited
-        bgCargarjPanel.setBackground(new Color(255,202,58));
+        bgCargarjPanel.setBackground(new Color(255, 202, 58));
     }//GEN-LAST:event_btCargarjLabelMouseExited
 
     private void btAceptarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAceptarjLabelMouseClicked
-        // TODO add your handling code here:
+        JuegoFrt juego = new JuegoFrt(parent, tablero);
+        this.setVisible(false);
+        juego.setVisible(true);
+        parent.cambiarVentana(juego);
+
     }//GEN-LAST:event_btAceptarjLabelMouseClicked
 
     private void btAceptarjLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAceptarjLabelMouseEntered
-        bgAceptarjPanel.setBackground(new Color(138,201,38));
+        bgAceptarjPanel.setBackground(new Color(138, 201, 38));
     }//GEN-LAST:event_btAceptarjLabelMouseEntered
 
     private void btAceptarjLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAceptarjLabelMouseExited
-        bgAceptarjPanel.setBackground(new Color(255,202,58));
+        bgAceptarjPanel.setBackground(new Color(255, 202, 58));
     }//GEN-LAST:event_btAceptarjLabelMouseExited
 
 
