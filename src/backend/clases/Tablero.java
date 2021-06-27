@@ -15,12 +15,24 @@ public class Tablero {
 
     }
 
+    public int getFilas() {
+        return filas;
+    }
+
+    public int getColumnas() {
+        return columnas;
+    }
+
     public void setFilas(int filas) {
         this.filas = filas;
     }
 
     public void setColumnas(int columnas) {
         this.columnas = columnas;
+    }
+
+    public Casilla[][] getTablero() {
+        return tablero;
     }
 
     public boolean crearTablero() {
@@ -35,14 +47,15 @@ public class Tablero {
     }
 
     private void crearCasillas() {
+        int contador = 1;
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                tablero[i][j] = new Casilla(this);
+                tablero[i][j] = new Casilla(this, contador++);
             }
         }
     }
 
-    public void asignarEspecial(Especial especial, int posicionX, int posicionY){
-        tablero[posicionX][posicionY].setEspecial(especial); 
+    public void asignarEspecial(Especial especial, int posicionX, int posicionY) {
+        tablero[posicionX][posicionY].setEspecial(especial);
     }
 }

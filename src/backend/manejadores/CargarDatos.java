@@ -64,6 +64,8 @@ public class CargarDatos {
     }
 
     private void cargarTablero(ArrayList<String> campos) {
+        System.out.println("Filas = " + campos.get(0));
+        System.out.println("Columnas = " + campos.get(1));
         tablero.setFilas(Integer.valueOf(campos.get(0)));
         tablero.setColumnas(Integer.valueOf(campos.get(1)));
         seCreoTablero = tablero.crearTablero();
@@ -93,34 +95,34 @@ public class CargarDatos {
 
     }
 
-    private void cargarRetrocede(ArrayList<String> campos){
+    private void cargarRetrocede(ArrayList<String> campos) {
         int cantidadPosiciones = Integer.valueOf(campos.get(2));
-        Especial especial = new Retrocede(cantidadPosiciones)
-        int fila = Integer.valueOf(campos.get(0)) ;
-        int columna = Integer.valueOf(campos.get(1)) ;
+        Especial especial = new Retrocede(cantidadPosiciones);
+        int fila = Integer.valueOf(campos.get(0));
+        int columna = Integer.valueOf(campos.get(1));
         tablero.asignarEspecial(especial, fila, columna);
-        
+
     }
 
-    private void cargarSubida(ArrayList<String> campos){
-        int posicionInicialX = Integer.valueOf(campos.get(0)) ;
-        int posicionInicialY = Integer.valueOf(campos.get(1)) ;
+    private void cargarSubida(ArrayList<String> campos) {
+        int posicionInicialX = Integer.valueOf(campos.get(0));
+        int posicionInicialY = Integer.valueOf(campos.get(1));
         int posicionFinalX = Integer.valueOf(campos.get(0));
         int posicionFinalY = Integer.valueOf(campos.get(0));
 
-        Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY)        
+        Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY);
         tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
-        
+
     }
 
-    private void cargarBajada(ArrayList<String> campos){
-        int posicionInicialX = Integer.valueOf(campos.get(0)) ;
-        int posicionInicialY = Integer.valueOf(campos.get(1)) ;
+    private void cargarBajada(ArrayList<String> campos) {
+        int posicionInicialX = Integer.valueOf(campos.get(0));
+        int posicionInicialY = Integer.valueOf(campos.get(1));
         int posicionFinalX = Integer.valueOf(campos.get(0));
         int posicionFinalY = Integer.valueOf(campos.get(0));
 
-        Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY)        
-        tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);        
+        Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY);
+        tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
     }
 
     public ArrayList<String> extraerCampos(String lineaArchivo) {

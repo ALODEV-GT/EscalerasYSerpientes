@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.clases.Tablero;
 import backend.manejadores.CargarDatos;
 import java.awt.Color;
 import java.io.File;
@@ -8,7 +9,7 @@ import javax.swing.JFileChooser;
 public class JugarFrt extends javax.swing.JPanel {
 
     private ManejadorVentanas parent;
-    private CargarDatos cargarDatos = new CargarDatos();
+    private Tablero tablero;
 
     public JugarFrt(ManejadorVentanas parent) {
         this.parent = parent;
@@ -314,6 +315,9 @@ public class JugarFrt extends javax.swing.JPanel {
 
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChosser.getSelectedFile();
+            CargarDatos cargarDatos = new CargarDatos();
+            cargarDatos.cargarDatos(archivo.getAbsolutePath());
+            this.tablero = cargarDatos.getTablero();
         }
     }//GEN-LAST:event_btCargarjLabelMouseClicked
 

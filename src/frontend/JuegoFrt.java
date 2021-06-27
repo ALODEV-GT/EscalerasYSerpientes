@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.clases.Casilla;
 import backend.clases.Tablero;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,24 +20,18 @@ public class JuegoFrt extends javax.swing.JPanel {
         this.tablero = tablero;
         this.parent = parent;
         initComponents();
+        contenedor.setLayout(new GridLayout(this.tablero.getFilas(), this.tablero.getColumnas()));
+        contenedor.setPreferredSize(new Dimension(70 * this.tablero.getFilas(), 55 * this.tablero.getColumnas()));
         dibujarTablero();
     }
-    
-    public void dibujarTablero(){
-        contenedor.setLayout(new  GridLayout(10,10));
-        contenedor.setPreferredSize(new Dimension(70*10, 55*10));
-        
-        for (int i = 1; i <= 100; i++) {
-        JPanel panel = new  JPanel();
-        panel.setSize(55, 70);
-        panel.setBackground(new Color(255, 202, 58));
-        Border borde = new TitledBorder(new LineBorder(new Color(255, 190,20)), "");
-        panel.setBorder(borde);
-        JLabel label = new JLabel(""+i);
-        label.setSize(55, 70);
-        panel.add(label);
-        contenedor.add(panel);
-            
+
+    public void dibujarTablero() {
+        Casilla[][] tablero = this.tablero.getTablero();
+        for (int i = tablero.length - 1; i >= 0; i--) {
+            for (int j = tablero[i].length-1; j >= 0; j--) {
+                System.out.println(i + " , " +j);
+                contenedor.add(tablero[i][j].getPanel());
+            }
         }
     }
 
