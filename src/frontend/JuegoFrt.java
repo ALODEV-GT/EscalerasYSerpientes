@@ -30,7 +30,7 @@ public class JuegoFrt extends javax.swing.JPanel {
         jugadores[0] = new Jugador(123, "Brayan", "Alonzo");
         jugadores[1] = new Jugador(578, "Alex", "Ouiji");
         
-        motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero, this.parent);
+        motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero, this.parent,  this.dadojLabel);
     }
     
     private void dibujarTablero(){
@@ -174,6 +174,9 @@ public class JuegoFrt extends javax.swing.JPanel {
         }else{
             dadojLabel.setIcon(new ImageIcon("src/resources/dado.gif") );
             dadoEnMovimiento = true;
+            if(motor.getGanador() != null){
+                parent.mostrarInicio(this);
+            }
         }
     }//GEN-LAST:event_dadojLabelMouseClicked
 

@@ -1,5 +1,6 @@
 package backend.manejadores;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -20,9 +21,12 @@ public class MotorJuego {
     private boolean yaEligio = false;
     private JLabel mostrarNumDado;
     private ManejadorVentanas parent;
+    private Jugador ganador;
+    private JLabel espacioDado;
 
     public MotorJuego(Jugador[] jugadores, JLabel mostrarNumDado, JLabel mostrarTurnoDe, Tablero tablero,
-            ManejadorVentanas parent) {
+            ManejadorVentanas parent, JLabel espacioDado) {
+        this.espacioDado = espacioDado;
         this.parent = parent;
         this.mostrarNumDado = mostrarNumDado;
         this.tablero = tablero;
@@ -34,6 +38,14 @@ public class MotorJuego {
 
         ManejarTurnos manejo = new ManejarTurnos();
         manejo.start();
+    }
+
+    public Jugador getGanador() {
+        return ganador;
+    }
+
+    public boolean isTerminado() {
+        return terminado;
     }
 
     public void setTerminado(boolean terminado) {
@@ -68,37 +80,58 @@ public class MotorJuego {
                         } catch (InterruptedException e) {
                             System.err.println("Ocurrio un error al esperar");
                         }
-                        System.out.println("Esperando a que pare el dado");
                     }
                     yaEligio = false;
 
                     int numCasillasAvanzar = generarNumAleatorio(1, 6);
                     mostrarNumDado.setText("" + numCasillasAvanzar);
 
-                    mover(numCasillasAvanzar, jugadores[numTurno]);
-                    if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().esEspecial()) {
+                    if ((numCasillasAvanzar + jugadores[numTurno].getPosicionActual()) > posiciones.length-1) {
+                        System.out.println("Casillas avanzar: " + numCasillasAvanzar);
+                        System.out.println("Posicion jugador: " + jugadores[numTurno].getPosicionActual());
+                        System.out.println("Se pasa llega hasta " + (numCasillasAvanzar + jugadores[numTurno].getPosicionActual()));
+                    } else {
 
-                        if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
-                                .getEspecial() instanceof Tiradados) {
-                            numTurno--;
-                            AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
-                        } else {
-                            for (int i = 0; i < 1; i++) {
-                                try {
-                                    sleep(500);
-                                } catch (InterruptedException e) {
-                                    System.err.println("Ocurrio un error al esperar");
+                        mover(numCasillasAvanzar, jugadores[numTurno]);
+                        if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().esEspecial()) {
+
+                            if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                    .getEspecial() instanceof Tiradados) {
+                                numTurno--;
+                                AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
+                            } else {
+                                for (int i = 0; i < 1; i++) {
+                                    try {
+                                        sleep(500);
+                                    } catch (InterruptedException e) {
+                                        System.err.println("Ocurrio un error al esperar");
+                                    }
                                 }
+                                posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                        .activarEspecial(jugadores[numTurno]);
                             }
-                            posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
-                                    .activarEspecial(jugadores[numTurno]);
+
                         }
 
+                        if (jugadores[numTurno].getPosicionActual() == posiciones.length-1) {
+                            terminado = true;
+                            ganador = jugadores[numTurno];
+                        }
                     }
+
                 }
                 numTurno++;
 
             } while (!terminado);
+            AvisosFrt.mostrarMensaje(parent, "GANO " + ganador.getNombre() + " " + ganador.getApellido());
+            ganador.agregarPartidaGanada();
+            espacioDado.setIcon(new ImageIcon("src/resources/home.png"));
+            for (int i = 0; i < jugadores.length; i++) {
+                if (!jugadores[i].equals(ganador)) {
+                    jugadores[i].agregarPartidaPerdida();
+                }
+                jugadores[i].agregarPartidaJugada();
+            }
         }
 
         private void mover(int numCasillasAvanzar, Jugador jugador) {
