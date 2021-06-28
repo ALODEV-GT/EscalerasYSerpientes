@@ -6,6 +6,7 @@ import backend.clases.Tablero;
 import backend.manejadores.MotorJuego;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.ImageIcon;
 
 public class JuegoFrt extends javax.swing.JPanel {
 
@@ -13,6 +14,7 @@ public class JuegoFrt extends javax.swing.JPanel {
     private ManejadorVentanas parent;
     private MotorJuego motor;
     private Jugador[] jugadores;
+    private boolean dadoEnMovimiento = false;
     
 
     public JuegoFrt(ManejadorVentanas parent, Tablero tablero, Jugador[] jugadores) {
@@ -48,6 +50,7 @@ public class JuegoFrt extends javax.swing.JPanel {
         contenedor = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        dadojLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         mostrarTurnoDe = new javax.swing.JLabel();
         mostrarNumDado = new javax.swing.JLabel();
@@ -80,22 +83,36 @@ public class JuegoFrt extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 244, Short.MAX_VALUE)
         );
 
+        jPanel2.setMaximumSize(new java.awt.Dimension(140, 140));
+        jPanel2.setMinimumSize(new java.awt.Dimension(140, 140));
+        jPanel2.setOpaque(false);
+
+        dadojLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/parado.png"))); // NOI18N
+        dadojLabel.setMaximumSize(new java.awt.Dimension(140, 140));
+        dadojLabel.setMinimumSize(new java.awt.Dimension(140, 140));
+        dadojLabel.setPreferredSize(new java.awt.Dimension(140, 140));
+        dadojLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dadojLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(dadojLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addComponent(dadojLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -130,7 +147,7 @@ public class JuegoFrt extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -153,9 +170,20 @@ public class JuegoFrt extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void dadojLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dadojLabelMouseClicked
+        if(dadoEnMovimiento){
+            dadojLabel.setIcon(new ImageIcon("src/resources/parado.png") );
+            dadoEnMovimiento = false;
+        }else{
+            dadojLabel.setIcon(new ImageIcon("src/resources/dado.gif") );
+            dadoEnMovimiento = true;
+        }
+    }//GEN-LAST:event_dadojLabelMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedor;
+    private javax.swing.JLabel dadojLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
