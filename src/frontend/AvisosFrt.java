@@ -115,7 +115,7 @@ public class AvisosFrt extends javax.swing.JDialog {
     }//GEN-LAST:event_aceptarjLabelMouseExited
 
     
-    public static void mostrarMensaje(java.awt.Frame parent, String mensaje ){
+    public static void mostrarMensaje(ManejadorVentanas parent, String mensaje ){
         AvisosFrt aviso = new AvisosFrt(parent, true , mensaje);
         aviso.setVisible(true);
     }

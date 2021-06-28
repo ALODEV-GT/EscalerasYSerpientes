@@ -10,7 +10,8 @@ public class Jugador {
     private int partidasGanadas = 0;
     private int partidasPerdidas = 0;
     private int numTurno;
-    private int posicionActual = 1;
+    private int posicionActual = 0;
+    private boolean turnoPerdido = false;
 
     public Ficha getMiFicha() {
         return miFicha;
@@ -37,6 +38,14 @@ public class Jugador {
 
     public void setNumTurno(int numTurno) {
         this.numTurno = numTurno;
+    }
+
+    public void setTurnoPerdido(boolean turnoPerdido) {
+        this.turnoPerdido = turnoPerdido;
+    }
+
+    public boolean isTurnoPerdido() {
+        return turnoPerdido;
     }
 
     public int getNumTurno() {

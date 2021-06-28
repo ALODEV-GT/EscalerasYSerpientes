@@ -318,7 +318,7 @@ public class JugarFrt extends javax.swing.JPanel {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChosser.getSelectedFile();
             CargarDatos cargarDatos = new CargarDatos();
-            cargarDatos.cargarDatos(archivo.getAbsolutePath());
+            cargarDatos.cargarDatos(archivo.getAbsolutePath(), parent);
             this.tablero = cargarDatos.getTablero();
         }
     }//GEN-LAST:event_btCargarjLabelMouseClicked

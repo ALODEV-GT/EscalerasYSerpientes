@@ -1,6 +1,7 @@
 package frontend;
 
 import java.awt.Color;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ManejadorVentanas extends javax.swing.JFrame {
@@ -18,6 +19,10 @@ public class ManejadorVentanas extends javax.swing.JFrame {
     public void cambiarVentana(JPanel panel) {
         contenedorjPanel.add(panel);
         contenedorjPanel.validate();
+    }
+    
+    public JFrame getJFrame(){
+        return this;
     }
     
     public void mostrarInicio(JPanel panel) {

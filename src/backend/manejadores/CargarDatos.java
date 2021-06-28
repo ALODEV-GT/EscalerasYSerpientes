@@ -14,13 +14,16 @@ import backend.especiales.PierdeTurno;
 import backend.especiales.Retrocede;
 import backend.especiales.Subida;
 import backend.especiales.Tiradados;
+import frontend.ManejadorVentanas;
 
 public class CargarDatos {
 
     private Tablero tablero = new Tablero();
     private boolean seCreoTablero = false;
+    private ManejadorVentanas ventanaPrincipal;
 
-    public void cargarDatos(String direccionArchivo) {
+    public void cargarDatos(String direccionArchivo, ManejadorVentanas ventanaPrincipal) {
+        this.ventanaPrincipal = ventanaPrincipal;
         String[] lineasArchivo;
         String encabezado;
         ArrayList<String> campos;
@@ -72,7 +75,7 @@ public class CargarDatos {
     }
 
     private void cargarPierdeTurno(ArrayList<String> campos) {
-        Especial especial = new PierdeTurno();
+        Especial especial = new PierdeTurno(ventanaPrincipal);
         int fila = Integer.valueOf(campos.get(0));
         int columna = Integer.valueOf(campos.get(1));
         tablero.asignarEspecial(especial, fila, columna);
@@ -88,7 +91,7 @@ public class CargarDatos {
 
     private void cargarAvanza(ArrayList<String> campos) {
         int cantidadPosiciones = Integer.valueOf(campos.get(2));
-        Especial especial = new Avanza(cantidadPosiciones);
+        Especial especial = new Avanza(cantidadPosiciones, this.tablero);
         int fila = Integer.valueOf(campos.get(0));
         int columna = Integer.valueOf(campos.get(1));
         tablero.asignarEspecial(especial, fila, columna);
@@ -97,7 +100,7 @@ public class CargarDatos {
 
     private void cargarRetrocede(ArrayList<String> campos) {
         int cantidadPosiciones = Integer.valueOf(campos.get(2));
-        Especial especial = new Retrocede(cantidadPosiciones);
+        Especial especial = new Retrocede(cantidadPosiciones, this.tablero);
         int fila = Integer.valueOf(campos.get(0));
         int columna = Integer.valueOf(campos.get(1));
         tablero.asignarEspecial(especial, fila, columna);

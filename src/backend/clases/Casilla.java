@@ -65,13 +65,32 @@ public class Casilla {
 
     public void agregarFicha(Ficha ficha) {
         fichas.add(ficha);
+        label.setIcon(ficha.getImagenFicha());
+        label.setText("");
+    }
+
+    public Especial getEspecial() {
+        return especial;
     }
 
     public void quitarFicha(Jugador jugador) {
         for (int i = 0; i < fichas.size(); i++) {
             if (fichas.get(i).getJugador().equals(jugador)) {
                 fichas.remove(i);
+                System.out.println("SI SE QUITO LA FICHA ---------------------->");
                 break;
+            }
+        }
+
+        if (fichas.size()!= 0 ) {
+            label.setIcon(fichas.get(0).getImagenFicha());;
+        }else{
+            if (esEspecial) {
+                label.setIcon(null);
+                label.setText(this.especial.getDescripcion());
+            }else{
+                label.setIcon(null);
+                label.setText("" + this.numCasilla);
             }
         }
     }

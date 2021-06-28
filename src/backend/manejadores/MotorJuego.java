@@ -1,10 +1,15 @@
 package backend.manejadores;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import backend.clases.Jugador;
 import backend.clases.Posicion;
 import backend.clases.Tablero;
+import backend.especiales.PierdeTurno;
+import backend.especiales.Tiradados;
+import frontend.AvisosFrt;
+import frontend.ManejadorVentanas;
 
 public class MotorJuego {
 
@@ -14,8 +19,11 @@ public class MotorJuego {
     private JLabel mostrarTurnoDe;
     private boolean yaEligio = false;
     private JLabel mostrarNumDado;
+    private ManejadorVentanas parent;
 
-    public MotorJuego(Jugador[] jugadores, JLabel mostrarNumDado, JLabel mostrarTurnoDe,Tablero tablero) {
+    public MotorJuego(Jugador[] jugadores, JLabel mostrarNumDado, JLabel mostrarTurnoDe, Tablero tablero,
+            ManejadorVentanas parent) {
+        this.parent = parent;
         this.mostrarNumDado = mostrarNumDado;
         this.tablero = tablero;
         this.mostrarTurnoDe = mostrarTurnoDe;
@@ -40,28 +48,56 @@ public class MotorJuego {
         private Posicion[] posiciones = tablero.getPosiciones();
 
         public void run() {
-            int numTurno = 1;
+
+            mostrarNumDado.setText("");
+            int numTurno = 0;
             do {
-                mostrarTurnoDe.setText(
-                        "El es turno de " + jugadores[numTurno].getNombre() + " " + jugadores[numTurno].getApellido());
-                while (!yaEligio) {
-                    try {
-                        sleep(100);
-                    } catch (InterruptedException e) {
-                        System.err.println("Ocurrio un error al esperar");
-                    }
-                    System.out.println("Esperando a que pare el dado");
+                if (numTurno == jugadores.length) {
+                    numTurno = 0;
                 }
 
-                int numCasillasAvanzar = generarNumAleatorio(1, 6);
-                mostrarNumDado.setText("" + numCasillasAvanzar);
+                if (jugadores[numTurno].isTurnoPerdido()) {
+                    jugadores[numTurno].setTurnoPerdido(false);
+                } else {
 
-                mover(numCasillasAvanzar, jugadores[numTurno]);
-                if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().esEspecial()) {
-                    posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
-                            .activarEspecial(jugadores[numTurno]);
+                    mostrarTurnoDe.setText(
+                            "Es turno de " + jugadores[numTurno].getNombre() + " " + jugadores[numTurno].getApellido());
+                    while (!yaEligio) {
+                        try {
+                            sleep(100);
+                        } catch (InterruptedException e) {
+                            System.err.println("Ocurrio un error al esperar");
+                        }
+                        System.out.println("Esperando a que pare el dado");
+                    }
+                    yaEligio = false;
+
+                    int numCasillasAvanzar = generarNumAleatorio(1, 6);
+                    mostrarNumDado.setText("" + numCasillasAvanzar);
+
+                    mover(numCasillasAvanzar, jugadores[numTurno]);
+                    if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().esEspecial()) {
+
+                        if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                .getEspecial() instanceof Tiradados) {
+                            numTurno--;
+                            AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
+                        } else {
+                            for (int i = 0; i < 1; i++) {
+                                try {
+                                    sleep(500);
+                                } catch (InterruptedException e) {
+                                    System.err.println("Ocurrio un error al esperar");
+                                }
+                            }
+                            posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                    .activarEspecial(jugadores[numTurno]);
+                        }
+
+                    }
                 }
                 numTurno++;
+
             } while (!terminado);
         }
 
@@ -69,6 +105,7 @@ public class MotorJuego {
             int posicionActual = jugador.getPosicionActual();
             posiciones[posicionActual].getCasilla().quitarFicha(jugador);
             posiciones[posicionActual + numCasillasAvanzar].getCasilla().agregarFicha(jugador.getMiFicha());
+            jugador.setPosicionActual(posicionActual + numCasillasAvanzar);
         }
 
     }

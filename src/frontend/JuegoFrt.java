@@ -28,9 +28,9 @@ public class JuegoFrt extends javax.swing.JPanel {
         
         jugadores = new Jugador[2];
         jugadores[0] = new Jugador(123, "Brayan", "Alonzo");
-        jugadores[1] = new Jugador(123, "Alex", "Ouiji");
+        jugadores[1] = new Jugador(578, "Alex", "Ouiji");
         
-        motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero);
+        motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero, this.parent);
     }
     
     private void dibujarTablero(){
@@ -52,8 +52,9 @@ public class JuegoFrt extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         dadojLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        mostrarTurnoDe = new javax.swing.JLabel();
         mostrarNumDado = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        mostrarTurnoDe = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(25, 130, 196));
         setMaximumSize(new java.awt.Dimension(850, 510));
@@ -115,48 +116,43 @@ public class JuegoFrt extends javax.swing.JPanel {
             .addComponent(dadojLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        mostrarNumDado.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
+        mostrarNumDado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(mostrarNumDado, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 40, 130, 20));
+
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Obtuviste un");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 10, 140, -1));
 
         mostrarTurnoDe.setText("jLabel1");
-
-        mostrarNumDado.setText("15");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(mostrarTurnoDe, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mostrarNumDado))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(34, 34, 34))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mostrarTurnoDe)
-                    .addComponent(mostrarNumDado))
+                .addComponent(mostrarTurnoDe)
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,6 +170,7 @@ public class JuegoFrt extends javax.swing.JPanel {
         if(dadoEnMovimiento){
             dadojLabel.setIcon(new ImageIcon("src/resources/parado.png") );
             dadoEnMovimiento = false;
+            motor.setYaEligio(true);
         }else{
             dadojLabel.setIcon(new ImageIcon("src/resources/dado.gif") );
             dadoEnMovimiento = true;
@@ -184,6 +181,7 @@ public class JuegoFrt extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedor;
     private javax.swing.JLabel dadojLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
