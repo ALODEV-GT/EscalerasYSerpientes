@@ -110,8 +110,8 @@ public class CargarDatos {
     private void cargarSubida(ArrayList<String> campos) {
         int posicionInicialX = Integer.valueOf(campos.get(0));
         int posicionInicialY = Integer.valueOf(campos.get(1));
-        int posicionFinalX = Integer.valueOf(campos.get(0));
-        int posicionFinalY = Integer.valueOf(campos.get(0));
+        int posicionFinalX = Integer.valueOf(campos.get(2));
+        int posicionFinalY = Integer.valueOf(campos.get(3));
 
         Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, this.tablero);
         tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
@@ -121,8 +121,8 @@ public class CargarDatos {
     private void cargarBajada(ArrayList<String> campos) {
         int posicionInicialX = Integer.valueOf(campos.get(0));
         int posicionInicialY = Integer.valueOf(campos.get(1));
-        int posicionFinalX = Integer.valueOf(campos.get(0));
-        int posicionFinalY = Integer.valueOf(campos.get(0));
+        int posicionFinalX = Integer.valueOf(campos.get(2));
+        int posicionFinalY = Integer.valueOf(campos.get(3));
 
         Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, this.tablero);
         tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);

@@ -8,16 +8,13 @@ public class Subida extends Escalera {
     private final String DESCRIPCION;
     private static final Color COLOR_CASILLA = new Color(106, 76, 147);
 
-    private Tablero tablero;
-
     public Subida(int posicionInicialX, int posicionInicialY, int posicionFinalX, int posicionFinalY, Tablero tablero){
-        super(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY);
-        this.tablero = tablero;
+        super(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, tablero);
         DESCRIPCION = "<html><body>&nbsp;Sube a <br>la casilla<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + Escalera.obtenerNumeroCasilla(tablero, posicionFinalX, posicionFinalY)+"</body></html>"; 
     }
 
     public void activar(Jugador jugador) {
-        // CAMBIAR DE POSICIONES
+        super.mover(super.posicionFinal - super.posicionInicial, jugador, super.tablero.getPosiciones());
     }
 
     @Override
