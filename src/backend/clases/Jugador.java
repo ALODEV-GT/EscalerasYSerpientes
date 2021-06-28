@@ -93,4 +93,15 @@ public class Jugador {
         return true;
     }
 
+    public String[] getInformacion(){
+        String[] info = new String[6];
+        info[0] = String.valueOf(this.id);
+        info[1] = this.nombre;
+        info[2] = this.apellido;
+        info[3] = String.valueOf(this.partidasGanadas);
+        info[4] = String.valueOf(this.partidasPerdidas);
+        info[5] = String.valueOf(this.partidasJugadas);
+        return info;
+    }
+
 }

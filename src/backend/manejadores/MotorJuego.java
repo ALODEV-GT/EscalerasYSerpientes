@@ -86,10 +86,11 @@ public class MotorJuego {
                     int numCasillasAvanzar = generarNumAleatorio(1, 6);
                     mostrarNumDado.setText("" + numCasillasAvanzar);
 
-                    if ((numCasillasAvanzar + jugadores[numTurno].getPosicionActual()) > posiciones.length-1) {
+                    if ((numCasillasAvanzar + jugadores[numTurno].getPosicionActual()) > posiciones.length - 1) {
                         System.out.println("Casillas avanzar: " + numCasillasAvanzar);
                         System.out.println("Posicion jugador: " + jugadores[numTurno].getPosicionActual());
-                        System.out.println("Se pasa llega hasta " + (numCasillasAvanzar + jugadores[numTurno].getPosicionActual()));
+                        System.out.println("Se pasa llega hasta "
+                                + (numCasillasAvanzar + jugadores[numTurno].getPosicionActual()));
                     } else {
 
                         mover(numCasillasAvanzar, jugadores[numTurno]);
@@ -113,7 +114,7 @@ public class MotorJuego {
 
                         }
 
-                        if (jugadores[numTurno].getPosicionActual() == posiciones.length-1) {
+                        if (jugadores[numTurno].getPosicionActual() == posiciones.length - 1) {
                             terminado = true;
                             ganador = jugadores[numTurno];
                         }
@@ -140,7 +141,6 @@ public class MotorJuego {
             posiciones[posicionActual + numCasillasAvanzar].getCasilla().agregarFicha(jugador.getMiFicha());
             jugador.setPosicionActual(posicionActual + numCasillasAvanzar);
         }
-
     }
 
     // INICIO ASIGNAR TURNOS ALEATORIMANTE

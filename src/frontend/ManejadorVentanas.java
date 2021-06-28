@@ -1,12 +1,15 @@
 package frontend;
 
+import backend.clases.Jugador;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ManejadorVentanas extends javax.swing.JFrame {
     
     InicioFrtd inicio = new InicioFrtd(this);
+    private ArrayList<Jugador> jugadores = new ArrayList<>();
     
     public ManejadorVentanas() {
         initComponents();
@@ -29,6 +32,10 @@ public class ManejadorVentanas extends javax.swing.JFrame {
         panel.setVisible(false);
         this.inicio.setVisible(true);
         cambiarVentana(this.inicio);
+    }
+    
+    public ArrayList<Jugador> getJugadores(){
+        return this.jugadores;
     }
     
     @SuppressWarnings("unchecked")

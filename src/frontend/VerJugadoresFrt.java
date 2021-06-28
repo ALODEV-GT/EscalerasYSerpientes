@@ -1,14 +1,35 @@
 package frontend;
 
 import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
 
 public class VerJugadoresFrt extends javax.swing.JPanel {
 
     private ManejadorVentanas parent;
+    private DefaultTableModel jugadoresModelo = new DefaultTableModel();
 
     public VerJugadoresFrt(ManejadorVentanas parent) {
         this.parent = parent;
-        initComponents();
+        initComponents(); 
+        cargarModeloTabla();
+        imprimirJugadores();
+    }
+    
+    public void imprimirJugadores(){
+        if (!parent.getJugadores().isEmpty()) {
+            for (int i = 0; i < parent.getJugadores().size(); i++) {
+                jugadoresModelo.addRow(parent.getJugadores().get(i).getInformacion());
+            }
+        }
+    }
+    
+    private void cargarModeloTabla() {
+        jugadoresModelo.addColumn("Id");
+        jugadoresModelo.addColumn("Nombre");
+        jugadoresModelo.addColumn("Apellido");
+        jugadoresModelo.addColumn("Partidas ganadas");
+        jugadoresModelo.addColumn("Partidas perdidas");
+        jugadoresModelo.addColumn("Partidas jugadas");
     }
 
     @SuppressWarnings("unchecked")
@@ -17,9 +38,11 @@ public class VerJugadoresFrt extends javax.swing.JPanel {
 
         bgRegresarjPanel = new javax.swing.JPanel();
         btnRegresarjLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        infoJugadoresjTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(25, 130, 196));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bgRegresarjPanel.setBackground(new java.awt.Color(25, 130, 196));
 
@@ -50,30 +73,17 @@ public class VerJugadoresFrt extends javax.swing.JPanel {
             .addComponent(btnRegresarjLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("VER JUGADORES");
+        add(bgRegresarjPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(748, 468, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(748, Short.MAX_VALUE)
-                .addComponent(bgRegresarjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(249, 249, 249)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(179, 179, 179)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
-                .addComponent(bgRegresarjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        infoJugadoresjTable.setBackground(new java.awt.Color(138, 201, 38));
+        infoJugadoresjTable.setBorder(null);
+        infoJugadoresjTable.setFont(new java.awt.Font("Roboto Light", 0, 15)); // NOI18N
+        infoJugadoresjTable.setForeground(new java.awt.Color(1, 1, 1));
+        infoJugadoresjTable.setModel(jugadoresModelo);
+        infoJugadoresjTable.setGridColor(new java.awt.Color(138, 201, 38));
+        jScrollPane1.setViewportView(infoJugadoresjTable);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 800, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarjLabelMouseClicked
@@ -92,6 +102,7 @@ public class VerJugadoresFrt extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgRegresarjPanel;
     private javax.swing.JLabel btnRegresarjLabel;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTable infoJugadoresjTable;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
