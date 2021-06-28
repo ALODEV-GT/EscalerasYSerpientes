@@ -1,5 +1,5 @@
 package backend.clases;
 
 public enum ColorFicha {
-    ROJO, AZUL, VERDE, AMARILLO, NEGRO;
+    ROJO, AZUL, VERDE, AMARILLO, NEGRO, MORADO;
 }

@@ -1,35 +1,40 @@
 package frontend;
 
 import backend.clases.Casilla;
+import backend.clases.Jugador;
 import backend.clases.Tablero;
-import java.awt.Color;
+import backend.manejadores.MotorJuego;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 public class JuegoFrt extends javax.swing.JPanel {
 
     private Tablero tablero;
     private ManejadorVentanas parent;
+    private MotorJuego motor;
+    private Jugador[] jugadores;
+    
 
-    public JuegoFrt(ManejadorVentanas parent, Tablero tablero) {
+    public JuegoFrt(ManejadorVentanas parent, Tablero tablero, Jugador[] jugadores) {
+        //this.jugadores = jugadores;
         this.tablero = tablero;
         this.parent = parent;
         initComponents();
         contenedor.setLayout(new GridLayout(this.tablero.getFilas(), this.tablero.getColumnas()));
         contenedor.setPreferredSize(new Dimension(70 * this.tablero.getFilas(), 55 * this.tablero.getColumnas()));
         dibujarTablero();
+        
+        jugadores = new Jugador[2];
+        jugadores[0] = new Jugador(123, "Brayan", "Alonzo");
+        jugadores[1] = new Jugador(123, "Alex", "Ouiji");
+        
+        motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero);
     }
-
-    public void dibujarTablero() {
+    
+    private void dibujarTablero(){
         Casilla[][] tablero = this.tablero.getTablero();
-        for (int i = tablero.length - 1; i >= 0; i--) {
-            for (int j = tablero[i].length-1; j >= 0; j--) {
-                System.out.println(i + " , " +j);
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
                 contenedor.add(tablero[i][j].getPanel());
             }
         }
@@ -44,6 +49,8 @@ public class JuegoFrt extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        mostrarTurnoDe = new javax.swing.JLabel();
+        mostrarNumDado = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(25, 130, 196));
         setMaximumSize(new java.awt.Dimension(850, 510));
@@ -102,13 +109,24 @@ public class JuegoFrt extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        mostrarTurnoDe.setText("jLabel1");
+
+        mostrarNumDado.setText("15");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mostrarTurnoDe, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mostrarNumDado))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -119,7 +137,10 @@ public class JuegoFrt extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mostrarTurnoDe)
+                    .addComponent(mostrarNumDado))
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -139,5 +160,7 @@ public class JuegoFrt extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel mostrarNumDado;
+    private javax.swing.JLabel mostrarTurnoDe;
     // End of variables declaration//GEN-END:variables
 }

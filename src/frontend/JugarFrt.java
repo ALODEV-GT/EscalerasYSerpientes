@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.clases.Jugador;
 import backend.clases.Tablero;
 import backend.manejadores.CargarDatos;
 import java.awt.Color;
@@ -10,6 +11,7 @@ public class JugarFrt extends javax.swing.JPanel {
 
     private ManejadorVentanas parent;
     private Tablero tablero;
+    private Jugador[] jugadores;
 
     public JugarFrt(ManejadorVentanas parent) {
         this.parent = parent;
@@ -330,7 +332,7 @@ public class JugarFrt extends javax.swing.JPanel {
     }//GEN-LAST:event_btCargarjLabelMouseExited
 
     private void btAceptarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAceptarjLabelMouseClicked
-        JuegoFrt juego = new JuegoFrt(parent, tablero);
+        JuegoFrt juego = new JuegoFrt(parent, tablero, jugadores);
         this.setVisible(false);
         juego.setVisible(true);
         parent.cambiarVentana(juego);

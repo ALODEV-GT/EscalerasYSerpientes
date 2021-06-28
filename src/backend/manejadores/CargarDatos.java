@@ -110,7 +110,7 @@ public class CargarDatos {
         int posicionFinalX = Integer.valueOf(campos.get(0));
         int posicionFinalY = Integer.valueOf(campos.get(0));
 
-        Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY);
+        Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, this.tablero);
         tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
 
     }
@@ -121,7 +121,7 @@ public class CargarDatos {
         int posicionFinalX = Integer.valueOf(campos.get(0));
         int posicionFinalY = Integer.valueOf(campos.get(0));
 
-        Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY);
+        Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, this.tablero);
         tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
     }
 
