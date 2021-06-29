@@ -67,8 +67,6 @@ public class CargarDatos {
     }
 
     private void cargarTablero(ArrayList<String> campos) {
-        System.out.println("Filas = " + campos.get(0));
-        System.out.println("Columnas = " + campos.get(1));
         tablero.setFilas(Integer.valueOf(campos.get(0)));
         tablero.setColumnas(Integer.valueOf(campos.get(1)));
         seCreoTablero = tablero.crearTablero();

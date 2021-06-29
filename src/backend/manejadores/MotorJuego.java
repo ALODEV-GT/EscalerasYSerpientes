@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import backend.clases.Jugador;
+import backend.clases.LecturaEscrituraArchivosBinario;
 import backend.clases.Posicion;
 import backend.clases.Tablero;
 import backend.especiales.PierdeTurno;
@@ -35,18 +36,8 @@ public class MotorJuego {
         this.mostrarTurnoDe = mostrarTurnoDe;
         this.jugadores = jugadores;
 
-        
-        for (int i = 0; i < jugadores.length; i++) {
-            System.out.println(jugadores[i].getNombre());
-        }
-
         asignarTurno();
         ordenarJugadores(true);
-
-        System.out.println("------------- ORDENADO ----------------");
-        for (int i = 0; i < jugadores.length; i++) {
-            System.out.println(jugadores[i].getNombre() + "Turno: " + jugadores[i].getNumTurno());
-        }
 
         ManejarTurnos manejo = new ManejarTurnos();
         manejo.start();
@@ -142,6 +133,8 @@ public class MotorJuego {
                     jugadores[i].agregarPartidaPerdida();
                 }
                 jugadores[i].agregarPartidaJugada();
+                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/"+jugadores[i].getId()+".bin");
+                escritura.escribirArchivoBin(jugadores[i]);
             }
         }
 

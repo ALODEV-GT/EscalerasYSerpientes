@@ -1,43 +1,56 @@
 package frontend;
 
 import backend.clases.Jugador;
+import backend.clases.LecturaEscrituraArchivosBinario;
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ManejadorVentanas extends javax.swing.JFrame {
-    
+
     InicioFrtd inicio = new InicioFrtd(this);
     private ArrayList<Jugador> jugadores = new ArrayList<>();
-    
+
     public ManejadorVentanas() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         contenedorjPanel.add(inicio);
-        
+        leerUsuariosBinarios();
+
     }
-    
+
+    private void leerUsuariosBinarios() {
+        File binarios = new File("src/binarios");
+        String[] nombreArchivos = binarios.list();
+        for (int i = 0; i < nombreArchivos.length; i++) {
+            LecturaEscrituraArchivosBinario<Jugador> lectura = new LecturaEscrituraArchivosBinario<>("src/binarios/" + nombreArchivos[i]);
+            Jugador jugador = lectura.leerArchivoBin();
+            jugadores.add(jugador);
+        }
+    }
+
     public void cambiarVentana(JPanel panel) {
         contenedorjPanel.add(panel);
         contenedorjPanel.validate();
     }
-    
-    public JFrame getJFrame(){
+
+    public JFrame getJFrame() {
         return this;
     }
-    
+
     public void mostrarInicio(JPanel panel) {
         panel.setVisible(false);
         this.inicio.setVisible(true);
         cambiarVentana(this.inicio);
     }
-    
-    public ArrayList<Jugador> getJugadores(){
+
+    public ArrayList<Jugador> getJugadores() {
         return this.jugadores;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
