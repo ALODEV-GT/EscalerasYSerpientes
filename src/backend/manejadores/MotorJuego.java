@@ -107,8 +107,6 @@ public class MotorJuego {
 
                             } else {
 
-                                System.out.println("------------------------------------------------");
-
                                 do {
                                     for (int i = 0; i < 1; i++) {
                                         try {
@@ -119,33 +117,36 @@ public class MotorJuego {
                                     }
                                     posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
                                             .activarEspecial(jugadores[numTurno]);
-                                    
-                                    if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof Tiradados) {
+
+                                    if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                            .getEspecial() instanceof Tiradados) {
                                         repetir = false;
-                                    }else if(posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof PierdeTurno){
+                                    } else if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                            .getEspecial() instanceof PierdeTurno) {
                                         repetir = false;
-                                    }else if(posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().esEspecial() == false){
+                                    } else if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                            .esEspecial() == false) {
                                         repetir = false;
-                                    }else{
+                                    } else {
                                         repetir = true;
                                     }
 
                                 } while (repetir);
 
-                                        if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof Tiradados) {
-                                            this.seActivoVolverATirar = true;
-                                            AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
-                                        }
+                                if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                        .getEspecial() instanceof Tiradados) {
+                                    this.seActivoVolverATirar = true;
+                                    AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
+                                }
 
-                                        if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof PierdeTurno) {
-                                            if (!jugadores[numTurno].isTurnoPerdido()) {
-                                                posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
-                                            .activarEspecial(jugadores[numTurno]);
-                                            } 
-                                        }
-
+                                if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                        .getEspecial() instanceof PierdeTurno) {
+                                    if (!jugadores[numTurno].isTurnoPerdido()) {
+                                        posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                                .activarEspecial(jugadores[numTurno]);
+                                    }
+                                }
                             }
-
                         }
 
                         // Evalua si existe un ganador
