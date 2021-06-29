@@ -105,6 +105,12 @@ public class CargarDatos {
             Especial especial = new PierdeTurno(ventanaPrincipal);
             int fila = Integer.valueOf(campos.get(0));
             int columna = Integer.valueOf(campos.get(1));
+
+            if (fila < 0 || fila > tablero.getFilas()-1 
+            || columna < 0 || columna > tablero.getColumnas() -1) {
+                throw new MisExcepciones("La posicion que ingresaste no existe");
+            }
+
             tablero.asignarEspecial(especial, fila, columna);
 
         } catch (NumberFormatException e) {
@@ -121,6 +127,10 @@ public class CargarDatos {
             Especial especial = new Tiradados();
             int fila = Integer.valueOf(campos.get(0));
             int columna = Integer.valueOf(campos.get(1));
+            if (fila < 0 || fila > tablero.getFilas()-1 
+            || columna < 0 || columna > tablero.getColumnas() -1) {
+                throw new MisExcepciones("La posicion que ingresaste no existe");
+            }
             tablero.asignarEspecial(especial, fila, columna);
         } catch (NumberFormatException e) {
             throw new MisExcepciones("Debes ingresar numeros enteros Ej: tiradados(1,3)");
@@ -138,6 +148,21 @@ public class CargarDatos {
             Especial especial = new Avanza(cantidadPosiciones, this.tablero);
             int fila = Integer.valueOf(campos.get(0));
             int columna = Integer.valueOf(campos.get(1));
+
+            if (fila < 0 || fila > tablero.getFilas()-1 
+            || columna < 0 || columna > tablero.getColumnas() -1) {
+                throw new MisExcepciones("La posicion que ingresaste no existe");
+            }
+
+            if (cantidadPosiciones < 1) {
+                throw new MisExcepciones("El parametro de posiciones a avanzar no es valido");
+            }
+
+            if (tablero.getTablero()[fila][columna].getNumCasilla() + cantidadPosiciones
+            > tablero.getTablero()[tablero.getFilas()-1][tablero.getColumnas()-1].getNumCasilla()) {
+                throw new MisExcepciones("El parametro de posiciones a avanzar se pasa del tablero");
+            }
+
             tablero.asignarEspecial(especial, fila, columna);
         } catch (NumberFormatException e) {
             throw new MisExcepciones("Debes ingresar numeros enteros Ej: avanza(0,4,5)");
@@ -156,6 +181,21 @@ public class CargarDatos {
             Especial especial = new Retrocede(cantidadPosiciones, this.tablero);
             int fila = Integer.valueOf(campos.get(0));
             int columna = Integer.valueOf(campos.get(1));
+
+            if (fila < 0 || fila > tablero.getFilas()-1 
+            || columna < 0 || columna > tablero.getColumnas() -1) {
+                throw new MisExcepciones("La posicion que ingresaste no existe");
+            }
+
+            if (cantidadPosiciones < 1) {
+                throw new MisExcepciones("El parametro de posiciones a regresar no es valido");
+            }
+
+            if (tablero.getTablero()[fila][columna].getNumCasilla() - cantidadPosiciones
+            < tablero.getTablero()[0][0].getNumCasilla()) {
+                throw new MisExcepciones("El parametro de posiciones a regresar se pasa del tablero");
+            }
+
             tablero.asignarEspecial(especial, fila, columna);
         } catch (NumberFormatException e) {
             throw new MisExcepciones("Debes ingresar numeros enteros Ej: retrocede(1,3,5)");
@@ -173,6 +213,14 @@ public class CargarDatos {
             int posicionInicialY = Integer.valueOf(campos.get(1));
             int posicionFinalX = Integer.valueOf(campos.get(2));
             int posicionFinalY = Integer.valueOf(campos.get(3));
+
+            if (posicionInicialX < 0 || posicionInicialX > tablero.getFilas()-1 
+            || posicionFinalX < 0 || posicionFinalX > tablero.getFilas() -1 
+            || posicionFinalY < 0 || posicionFinalY > tablero.getColumnas()-1 
+            || posicionInicialY < 0 || posicionInicialY > tablero.getColumnas()-1) {
+                throw new MisExcepciones("La posicion que ingresaste no existe");
+            }
+
             Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY,
                     this.tablero);
             tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
@@ -193,6 +241,13 @@ public class CargarDatos {
             int posicionInicialY = Integer.valueOf(campos.get(1));
             int posicionFinalX = Integer.valueOf(campos.get(2));
             int posicionFinalY = Integer.valueOf(campos.get(3));
+
+            if (posicionInicialX < 0 || posicionInicialX > tablero.getFilas()-1 
+            || posicionFinalX < 0 || posicionFinalX > tablero.getFilas() -1 
+            || posicionFinalY < 0 || posicionFinalY > tablero.getColumnas()-1 
+            || posicionInicialY < 0 || posicionInicialY > tablero.getColumnas()-1) {
+                throw new MisExcepciones("La posicion que ingresaste no existe");
+            }
 
             Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY,
                     this.tablero);
