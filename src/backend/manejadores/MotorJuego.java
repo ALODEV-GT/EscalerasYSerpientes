@@ -62,6 +62,7 @@ public class MotorJuego {
 
         private Posicion[] posiciones = tablero.getPosiciones();
         private boolean seActivoVolverATirar = false;
+        private boolean repetir = false;
 
         public void run() {
 
@@ -76,8 +77,8 @@ public class MotorJuego {
                     jugadores[numTurno].setTurnoPerdido(false);
                 } else {
 
-                    mostrarTurnoDe.setText(
-                            "<html><body>Es turno de: <br>" + jugadores[numTurno].getNombre() + "<br> " + jugadores[numTurno].getApellido() + "</body></html>");
+                    mostrarTurnoDe.setText("<html><body>Es turno de: <br>" + jugadores[numTurno].getNombre() + "<br> "
+                            + jugadores[numTurno].getApellido() + "</body></html>");
 
                     fichaTurno.setIcon(jugadores[numTurno].getMiFicha().getFichaGrande());
                     while (!yaEligio) {
@@ -96,32 +97,64 @@ public class MotorJuego {
                     } else {
 
                         mover(numCasillasAvanzar, jugadores[numTurno]);
+
                         if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().esEspecial()) {
 
                             if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
                                     .getEspecial() instanceof Tiradados) {
-                                        this.seActivoVolverATirar = true;
-                                        AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
-                                        
+                                this.seActivoVolverATirar = true;
+                                AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
+
                             } else {
-                                for (int i = 0; i < 1; i++) {
-                                    try {
-                                        sleep(500);
-                                    } catch (InterruptedException e) {
-                                        System.err.println("Ocurrio un error al esperar");
+
+                                System.out.println("------------------------------------------------");
+
+                                do {
+                                    for (int i = 0; i < 1; i++) {
+                                        try {
+                                            sleep(1000);
+                                        } catch (InterruptedException e) {
+                                            System.err.println("Ocurrio un error al esperar");
+                                        }
                                     }
-                                }
-                                posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
-                                        .activarEspecial(jugadores[numTurno]);
+                                    posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                            .activarEspecial(jugadores[numTurno]);
+                                    
+                                    if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof Tiradados) {
+                                        repetir = false;
+                                    }else if(posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof PierdeTurno){
+                                        repetir = false;
+                                    }else if(posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().esEspecial() == false){
+                                        repetir = false;
+                                    }else{
+                                        repetir = true;
+                                    }
+
+                                } while (repetir);
+
+                                        if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof Tiradados) {
+                                            this.seActivoVolverATirar = true;
+                                            AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
+                                        }
+
+                                        if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla().getEspecial() instanceof PierdeTurno) {
+                                            if (!jugadores[numTurno].isTurnoPerdido()) {
+                                                posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
+                                            .activarEspecial(jugadores[numTurno]);
+                                            } 
+                                        }
+
                             }
 
                         }
 
+                        // Evalua si existe un ganador
                         if (jugadores[numTurno].getPosicionActual() == posiciones.length - 1) {
                             terminado = true;
                             ganador = jugadores[numTurno];
                         }
 
+                        // Permite que el mismo jugador vuelva a tirar en la suguiente ronda
                         if (this.seActivoVolverATirar) {
                             numTurno--;
                             this.seActivoVolverATirar = false;
@@ -140,7 +173,8 @@ public class MotorJuego {
                     jugadores[i].agregarPartidaPerdida();
                 }
                 jugadores[i].agregarPartidaJugada();
-                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/" + jugadores[i].getId() + ".bin");
+                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>(
+                        "src/binarios/" + jugadores[i].getId() + ".bin");
                 escritura.escribirArchivoBin(jugadores[i]);
             }
         }
