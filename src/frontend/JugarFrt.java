@@ -4,18 +4,37 @@ import backend.clases.Jugador;
 import backend.clases.Tablero;
 import backend.manejadores.CargarDatos;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class JugarFrt extends javax.swing.JPanel {
 
     private ManejadorVentanas parent;
     private Tablero tablero;
     private Jugador[] jugadores;
+    private int numJugadores;
+    private ArrayList<Jugador> tJugadores;
+    private int totalJugadores = 0;
+    private JTextField[] idJugadores;
 
     public JugarFrt(ManejadorVentanas parent) {
         this.parent = parent;
+        tJugadores = parent.getJugadores();
         initComponents();
+
+        if (!parent.getJugadores().isEmpty()) {
+            ponerAccionABotones();
+        } else {
+            this.notasjLabel.setText("Aun no hay jugadores!");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -25,25 +44,22 @@ public class JugarFrt extends javax.swing.JPanel {
 
         bgRegresarjPanel = new javax.swing.JPanel();
         btnRegresarjLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        contenedorjPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         bgCargarjPanel = new javax.swing.JPanel();
         btCargarjLabel = new javax.swing.JLabel();
         bgAceptarjPanel = new javax.swing.JPanel();
         btAceptarjLabel = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        btn1 = new javax.swing.JButton();
+        btn2 = new javax.swing.JButton();
+        btn3 = new javax.swing.JButton();
+        btn5 = new javax.swing.JButton();
+        btn6 = new javax.swing.JButton();
+        btn4 = new javax.swing.JButton();
+        notasjLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(25, 130, 196));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -70,7 +86,7 @@ public class JugarFrt extends javax.swing.JPanel {
         bgRegresarjPanel.setLayout(bgRegresarjPanelLayout);
         bgRegresarjPanelLayout.setHorizontalGroup(
             bgRegresarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnRegresarjLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+            .addComponent(btnRegresarjLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         bgRegresarjPanelLayout.setVerticalGroup(
             bgRegresarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,11 +94,25 @@ public class JugarFrt extends javax.swing.JPanel {
         );
 
         add(bgRegresarjPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, -1, -1));
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 280, 430));
 
-        jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 30)); // NOI18N
-        jLabel2.setText("Numero de jugares");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        contenedorjPanel.setBackground(new java.awt.Color(25, 130, 196));
+
+        javax.swing.GroupLayout contenedorjPanelLayout = new javax.swing.GroupLayout(contenedorjPanel);
+        contenedorjPanel.setLayout(contenedorjPanelLayout);
+        contenedorjPanelLayout.setHorizontalGroup(
+            contenedorjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        contenedorjPanelLayout.setVerticalGroup(
+            contenedorjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        add(contenedorjPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 200, 230));
+
+        jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 20)); // NOI18N
+        jLabel2.setText("Ingresa el id de los jugadores");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, -1, -1));
 
         bgCargarjPanel.setBackground(new java.awt.Color(255, 202, 58));
 
@@ -107,7 +137,7 @@ public class JugarFrt extends javax.swing.JPanel {
         bgCargarjPanel.setLayout(bgCargarjPanelLayout);
         bgCargarjPanelLayout.setHorizontalGroup(
             bgCargarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btCargarjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(btCargarjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         bgCargarjPanelLayout.setVerticalGroup(
             bgCargarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +170,7 @@ public class JugarFrt extends javax.swing.JPanel {
         bgAceptarjPanel.setLayout(bgAceptarjPanelLayout);
         bgAceptarjPanelLayout.setHorizontalGroup(
             bgAceptarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btAceptarjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(btAceptarjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         bgAceptarjPanelLayout.setVerticalGroup(
             bgAceptarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,151 +182,85 @@ public class JugarFrt extends javax.swing.JPanel {
         jPanel8.setOpaque(false);
         jPanel8.setLayout(new java.awt.GridBagLayout());
 
-        jPanel9.setBackground(new java.awt.Color(255, 0, 0));
-        jPanel9.setPreferredSize(new java.awt.Dimension(100, 100));
+        btn1.setBackground(new java.awt.Color(255, 0, 0));
+        btn1.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
+        btn1.setForeground(new java.awt.Color(254, 254, 254));
+        btn1.setText("1");
+        btn1.setBorder(null);
+        btn1.setBorderPainted(false);
+        btn1.setPreferredSize(new java.awt.Dimension(100, 100));
+        jPanel8.add(btn1, new java.awt.GridBagConstraints());
 
-        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("1");
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn2.setBackground(new java.awt.Color(155, 2, 2));
+        btn2.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
+        btn2.setForeground(new java.awt.Color(254, 254, 254));
+        btn2.setText("2");
+        btn2.setBorder(null);
+        btn2.setBorderPainted(false);
+        btn2.setPreferredSize(new java.awt.Dimension(100, 100));
+        jPanel8.add(btn2, new java.awt.GridBagConstraints());
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        jPanel8.add(jPanel9, gridBagConstraints);
-
-        jPanel1.setBackground(new java.awt.Color(0, 224, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(100, 100));
-
-        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("3");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
+        btn3.setBackground(new java.awt.Color(0, 224, 255));
+        btn3.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
+        btn3.setForeground(new java.awt.Color(254, 254, 254));
+        btn3.setText("3");
+        btn3.setBorder(null);
+        btn3.setBorderPainted(false);
+        btn3.setPreferredSize(new java.awt.Dimension(100, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        jPanel8.add(jPanel1, gridBagConstraints);
+        jPanel8.add(btn3, gridBagConstraints);
 
-        jPanel4.setBackground(new java.awt.Color(155, 2, 2));
-        jPanel4.setPreferredSize(new java.awt.Dimension(100, 100));
-
-        jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("2");
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        jPanel8.add(jPanel4, new java.awt.GridBagConstraints());
-
-        jPanel2.setBackground(new java.awt.Color(248, 207, 85));
-        jPanel2.setPreferredSize(new java.awt.Dimension(100, 100));
-
-        jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("4");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        jPanel8.add(jPanel2, gridBagConstraints);
-
-        jPanel3.setBackground(new java.awt.Color(137, 233, 35));
-        jPanel3.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
-        jPanel3.setPreferredSize(new java.awt.Dimension(100, 100));
-
-        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("5");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
+        btn5.setBackground(new java.awt.Color(137, 233, 35));
+        btn5.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
+        btn5.setForeground(new java.awt.Color(254, 254, 254));
+        btn5.setText("5");
+        btn5.setBorder(null);
+        btn5.setBorderPainted(false);
+        btn5.setPreferredSize(new java.awt.Dimension(100, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        jPanel8.add(jPanel3, gridBagConstraints);
+        jPanel8.add(btn5, gridBagConstraints);
 
-        jPanel6.setBackground(new java.awt.Color(254, 254, 254));
-        jPanel6.setForeground(new java.awt.Color(254, 254, 254));
-        jPanel6.setPreferredSize(new java.awt.Dimension(100, 100));
-
-        jLabel7.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(1, 1, 1));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("6");
-        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
+        btn6.setBackground(new java.awt.Color(254, 254, 254));
+        btn6.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
+        btn6.setForeground(new java.awt.Color(1, 1, 1));
+        btn6.setText("6");
+        btn6.setBorder(null);
+        btn6.setBorderPainted(false);
+        btn6.setPreferredSize(new java.awt.Dimension(100, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        jPanel8.add(jPanel6, gridBagConstraints);
+        jPanel8.add(btn6, gridBagConstraints);
+
+        btn4.setBackground(new java.awt.Color(248, 207, 85));
+        btn4.setFont(new java.awt.Font("Roboto Medium", 0, 60)); // NOI18N
+        btn4.setForeground(new java.awt.Color(254, 254, 254));
+        btn4.setText("4");
+        btn4.setBorder(null);
+        btn4.setBorderPainted(false);
+        btn4.setPreferredSize(new java.awt.Dimension(100, 100));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        jPanel8.add(btn4, gridBagConstraints);
 
         add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 210, 310));
+
+        notasjLabel.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        notasjLabel.setForeground(new java.awt.Color(255, 0, 0));
+        add(notasjLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 330, 30));
+
+        jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 30)); // NOI18N
+        jLabel3.setText("Numero de jugares");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 30)); // NOI18N
+        jLabel4.setText("Numero de jugares");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarjLabelMouseClicked
@@ -323,6 +287,50 @@ public class JugarFrt extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btCargarjLabelMouseClicked
 
+    private ActionListener ponerAccionABoton(int indice) {
+        ActionListener accion = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                contenedorjPanel.removeAll();
+
+                jugadores = new Jugador[indice];
+                numJugadores = indice;
+
+                idJugadores = new JTextField[indice];
+
+                contenedorjPanel.setLayout(new GridLayout(6, 2));
+                contenedorjPanel.setPreferredSize(new Dimension(200, 25 * indice));
+
+                for (int i = 0; i < indice; i++) {
+                    JLabel label = new JLabel("Id jugador " + (i + 1));
+                    label.setSize(90, 20);
+                    label.setFont(new Font("Roboto Light", 1, 15));
+                    JTextField id = new JTextField();
+                    id.setSize(90, 20);
+                    id.setBackground(new Color(25, 130, 196));
+                    id.setFont(new Font("Roboto Light", 1, 15));
+                    idJugadores[i] = id;
+
+                    contenedorjPanel.add(label);
+                    contenedorjPanel.add(id);
+                }
+
+                contenedorjPanel.updateUI();
+            }
+        };
+        return accion;
+    }
+
+    public void ponerAccionABotones() {
+        btn1.addActionListener(ponerAccionABoton(1));
+        btn2.addActionListener(ponerAccionABoton(2));
+        btn3.addActionListener(ponerAccionABoton(3));
+        btn4.addActionListener(ponerAccionABoton(4));
+        btn5.addActionListener(ponerAccionABoton(5));
+        btn6.addActionListener(ponerAccionABoton(6));
+    }
+
     private void btCargarjLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCargarjLabelMouseEntered
         bgCargarjPanel.setBackground(new Color(138, 201, 38));
     }//GEN-LAST:event_btCargarjLabelMouseEntered
@@ -332,12 +340,62 @@ public class JugarFrt extends javax.swing.JPanel {
     }//GEN-LAST:event_btCargarjLabelMouseExited
 
     private void btAceptarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAceptarjLabelMouseClicked
-        JuegoFrt juego = new JuegoFrt(parent, tablero, jugadores);
-        this.setVisible(false);
-        juego.setVisible(true);
-        parent.cambiarVentana(juego);
+        boolean existe = evaluarSiIdExisten();
 
+        if (existe) {
+            
+        } else {
+            elegirJugadores();
+            JuegoFrt juego = new JuegoFrt(parent, tablero, jugadores);
+            this.setVisible(false);
+            juego.setVisible(true);
+            parent.cambiarVentana(juego);
+        }
     }//GEN-LAST:event_btAceptarjLabelMouseClicked
+
+    public void elegirJugadores(){
+        for (int i = 0; i < jugadores.length; i++) {
+            for (int j = 0; j < tJugadores.size(); j++) {
+                if(tJugadores.get(j).getId() ==  Integer.valueOf(idJugadores[i].getText())){
+                    jugadores[i] = tJugadores.get(j);
+                }
+            }
+        }
+    }
+    
+    
+    public boolean evaluarSiIdExisten() {
+        boolean existe = true;
+        boolean mostrarMensaje = false;
+        String texto = "No existe el id do los jugadores";
+        for (int i = 0; i < idJugadores.length; i++) {
+            existe = buscarSiExiste(Integer.valueOf(idJugadores[i].getText()));
+
+            if (existe == false) {
+                mostrarMensaje = true;
+                texto += ", Jugador " + (i + 1);
+                existe = true;
+            }
+        }
+
+        if (mostrarMensaje) {
+            AvisosFrt.mostrarMensaje(parent, texto);
+        }
+
+        return mostrarMensaje;
+    }
+
+    public boolean buscarSiExiste(int id) {
+        boolean existe = false;
+        for (int i = 0; i < tJugadores.size(); i++) {
+            if (tJugadores.get(i).getId() == id) {
+                existe = true;
+            }
+        }
+
+        return existe;
+    }
+
 
     private void btAceptarjLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAceptarjLabelMouseEntered
         bgAceptarjPanel.setBackground(new Color(138, 201, 38));
@@ -354,21 +412,18 @@ public class JugarFrt extends javax.swing.JPanel {
     private javax.swing.JPanel bgRegresarjPanel;
     private javax.swing.JLabel btAceptarjLabel;
     private javax.swing.JLabel btCargarjLabel;
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
+    private javax.swing.JButton btn4;
+    private javax.swing.JButton btn5;
+    private javax.swing.JButton btn6;
     private javax.swing.JLabel btnRegresarjLabel;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel contenedorjPanel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel notasjLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -93,6 +93,10 @@ public class Jugador {
         return true;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String[] getInformacion(){
         String[] info = new String[6];
         info[0] = String.valueOf(this.id);
@@ -104,4 +108,9 @@ public class Jugador {
         return info;
     }
 
+    public void reiniciarValores(){
+        this.posicionActual = 0;
+        Ficha miFicha = new Ficha(this);
+        this.miFicha = miFicha;
+    }
 }

@@ -22,15 +22,18 @@ public class JuegoFrt extends javax.swing.JPanel {
         this.tablero = tablero;
         this.parent = parent;
         initComponents();
+        reiniciarValoresJugadores(jugadores);
         contenedor.setLayout(new GridLayout(this.tablero.getFilas(), this.tablero.getColumnas()));
         contenedor.setPreferredSize(new Dimension(70 * this.tablero.getFilas(), 55 * this.tablero.getColumnas()));
         dibujarTablero();
         
-        jugadores = new Jugador[2];
-        jugadores[0] = new Jugador(123, "Brayan", "Alonzo");
-        jugadores[1] = new Jugador(578, "Alex", "Ouiji");
-        
         motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero, this.parent,  this.dadojLabel);
+    }
+    
+    private void reiniciarValoresJugadores(Jugador[] jugadores){
+        for (int i = 0; i < jugadores.length; i++) {
+            jugadores[i].reiniciarValores();
+        }
     }
     
     private void dibujarTablero(){

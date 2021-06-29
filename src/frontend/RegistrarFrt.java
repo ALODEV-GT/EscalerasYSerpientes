@@ -231,6 +231,7 @@ public class RegistrarFrt extends javax.swing.JPanel {
             Jugador jugador = new Jugador(id, nombre, apellido);
             parent.getJugadores().add(jugador);
             AvisosFrt.mostrarMensaje(parent, "Te has registrado correctamente");
+            limpiar();
         } else {
             boolean existe = false;
 
@@ -248,12 +249,17 @@ public class RegistrarFrt extends javax.swing.JPanel {
             } else {
                 parent.getJugadores().add(jugador);
                 AvisosFrt.mostrarMensaje(parent, "Te has registrado correctamente");
+                limpiar();
             }
         }
-
-
+        
     }//GEN-LAST:event_btnRegistrarjLabelMouseClicked
 
+        private void limpiar(){
+            idjTextField.setText("");
+            nombrejTextField.setText("");
+            apellidojTextField.setText("");
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidojTextField;
