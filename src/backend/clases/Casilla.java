@@ -77,7 +77,6 @@ public class Casilla {
         for (int i = 0; i < fichas.size(); i++) {
             if (fichas.get(i).getJugador().equals(jugador)) {
                 fichas.remove(i);
-                System.out.println("SI SE QUITO LA FICHA ---------------------->");
                 break;
             }
         }

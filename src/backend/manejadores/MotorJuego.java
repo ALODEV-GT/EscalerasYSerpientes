@@ -32,9 +32,19 @@ public class MotorJuego {
         this.tablero = tablero;
         this.mostrarTurnoDe = mostrarTurnoDe;
         this.jugadores = jugadores;
-        this.yaEligio = yaEligio;
+
+        
+        for (int i = 0; i < jugadores.length; i++) {
+            System.out.println(jugadores[i].getNombre());
+        }
+
         asignarTurno();
         ordenarJugadores(true);
+
+        System.out.println("------------- ORDENADO ----------------");
+        for (int i = 0; i < jugadores.length; i++) {
+            System.out.println(jugadores[i].getNombre() + "Turno: " + jugadores[i].getNumTurno());
+        }
 
         ManejarTurnos manejo = new ManejarTurnos();
         manejo.start();
@@ -62,7 +72,7 @@ public class MotorJuego {
         public void run() {
 
             mostrarNumDado.setText("");
-            int numTurno = 0;
+            int numTurno = 0;            
             do {
                 if (numTurno == jugadores.length) {
                     numTurno = 0;
@@ -87,10 +97,6 @@ public class MotorJuego {
                     mostrarNumDado.setText("" + numCasillasAvanzar);
 
                     if ((numCasillasAvanzar + jugadores[numTurno].getPosicionActual()) > posiciones.length - 1) {
-                        System.out.println("Casillas avanzar: " + numCasillasAvanzar);
-                        System.out.println("Posicion jugador: " + jugadores[numTurno].getPosicionActual());
-                        System.out.println("Se pasa llega hasta "
-                                + (numCasillasAvanzar + jugadores[numTurno].getPosicionActual()));
                     } else {
 
                         mover(numCasillasAvanzar, jugadores[numTurno]);
@@ -155,6 +161,7 @@ public class MotorJuego {
                 existe = buscarExistenciaTurno(numTurno, turnosAsignados);
             } while (existe);
             jugadores[i].setNumTurno(numTurno);
+            turnosAsignados[i] = numTurno;
         }
     }
 
@@ -165,9 +172,9 @@ public class MotorJuego {
             for (int j = i; j > 0; j--) {
 
                 if (ascendente) {
-                    cambio = jugadores[i].getNumTurno() < jugadores[i].getNumTurno();
+                    cambio = jugadores[j].getNumTurno() < jugadores[j-1].getNumTurno();
                 } else {
-                    cambio = jugadores[i].getNumTurno() > jugadores[i].getNumTurno();
+                    cambio = jugadores[j].getNumTurno() > jugadores[j-1].getNumTurno();
                 }
 
                 if (cambio) {
