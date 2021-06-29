@@ -15,6 +15,7 @@ public class JuegoFrt extends javax.swing.JPanel {
     private MotorJuego motor;
     private Jugador[] jugadores;
     private boolean dadoEnMovimiento = false;
+    private boolean partidaEnCurso = true;
     
 
     public JuegoFrt(ManejadorVentanas parent, Tablero tablero, Jugador[] jugadores) {
@@ -28,6 +29,8 @@ public class JuegoFrt extends javax.swing.JPanel {
         dibujarTablero();
         
         motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero, this.parent,  this.dadojLabel, this.fichaTurnojLabel);
+        TiempoPartida tiempo = new TiempoPartida();
+        tiempo.start();
     }
     
     private void reiniciarValoresJugadores(Jugador[] jugadores){
@@ -59,6 +62,8 @@ public class JuegoFrt extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         mostrarNumDado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tiempojLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(25, 130, 196));
         setMaximumSize(new java.awt.Dimension(850, 510));
@@ -145,18 +150,30 @@ public class JuegoFrt extends javax.swing.JPanel {
         jLabel1.setText("Obtuviste un");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 10, 140, -1));
 
+        jLabel2.setFont(new java.awt.Font("Roboto Light", 0, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(78, 78, 78));
+        jLabel2.setText("Tiempo transcurrido:");
+
+        tiempojLabel.setText("tiempo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tiempojLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -171,7 +188,10 @@ public class JuegoFrt extends javax.swing.JPanel {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tiempojLabel)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -184,22 +204,43 @@ public class JuegoFrt extends javax.swing.JPanel {
             dadojLabel.setIcon(new ImageIcon("src/resources/dado.gif") );
             dadoEnMovimiento = true;
             if(motor.getGanador() != null){
+                partidaEnCurso = false;
                 parent.mostrarInicio(this);
             }
         }
     }//GEN-LAST:event_dadojLabelMouseClicked
 
+    private class TiempoPartida extends Thread{
+        
+         private int contador = 0;
+        
+        @Override
+        public void run(){
+            
+            while(partidaEnCurso){
+                contador++;
+                tiempojLabel.setText(""+contador);
+                 try {
+                    sleep(1000);
+                } catch (InterruptedException ex) {
+                    System.err.println("Ocurrio un error en el hilo Contador");
+                }
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedor;
     private javax.swing.JLabel dadojLabel;
     private javax.swing.JLabel fichaTurnojLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel mostrarNumDado;
     private javax.swing.JLabel mostrarTurnoDe;
+    private javax.swing.JLabel tiempojLabel;
     // End of variables declaration//GEN-END:variables
 }
