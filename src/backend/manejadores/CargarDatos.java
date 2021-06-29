@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JTextArea;
+
 import backend.clases.Tablero;
 import backend.especiales.Avanza;
 import backend.especiales.Bajada;
@@ -21,120 +23,200 @@ public class CargarDatos {
     private Tablero tablero = new Tablero();
     private boolean seCreoTablero = false;
     private ManejadorVentanas ventanaPrincipal;
+    private JTextArea espacioErrores;
+    private boolean terminar = false;
 
-    public void cargarDatos(String direccionArchivo, ManejadorVentanas ventanaPrincipal) {
+    public void cargarDatos(String direccionArchivo, ManejadorVentanas ventanaPrincipal, JTextArea errores) {
         this.ventanaPrincipal = ventanaPrincipal;
+        this.espacioErrores = errores;
         String[] lineasArchivo;
         String encabezado;
         ArrayList<String> campos;
         lineasArchivo = listarLineasArchivo(direccionArchivo);
         for (int i = 0; i < lineasArchivo.length; i++) {
             encabezado = extraerEncabezado(lineasArchivo[i]);
-            campos = extraerCampos(lineasArchivo[i]);
-            definirAspectoJuego(encabezado, campos);
+            try {
+                campos = extraerCampos(lineasArchivo[i]);
+                definirAspectoJuego(encabezado, campos, (i + 1));
+            } catch (MisExcepciones e) {
+                errores.append("\nLinea " + (i + 1) + " :" + e.getMessage());
+            }
+            if (terminar) {
+                break;
+            }
         }
-
     }
 
     public Tablero getTablero() {
         return this.tablero;
     }
 
-    private void definirAspectoJuego(String encabezado, ArrayList<String> campos) {
+    private void definirAspectoJuego(String encabezado, ArrayList<String> campos, int indice) throws MisExcepciones {
         if (encabezado.equalsIgnoreCase("tablero")) {
-            cargarTablero(campos);
-        }
+            cargarTablero(campos, indice);
 
-        if (seCreoTablero) {
-            if (encabezado.equalsIgnoreCase("pierdeturno")) {
-                cargarPierdeTurno(campos);
-            } else if (encabezado.equalsIgnoreCase("tiradados")) {
-                cargarTiradados(campos);
-            } else if (encabezado.equalsIgnoreCase("avanza")) {
-                cargarAvanza(campos);
-            } else if (encabezado.equalsIgnoreCase("retrocede")) {
-                cargarRetrocede(campos);
-            } else if (encabezado.equalsIgnoreCase("subida")) {
-                cargarSubida(campos);
-            } else if (encabezado.equalsIgnoreCase("bajada")) {
-                cargarBajada(campos);
-            } else {
-                // LA LINEA NO TIENE UNA INSTRUCCION VALIDA
-            }
         } else {
-            // SALTAR Y AVISAR QUE LA PRIMERA LINEA TIENE QUE SER CARGAR TABLERO
+
+            if (seCreoTablero) {
+                if (encabezado.equalsIgnoreCase("pierdeturno")) {
+                    cargarPierdeTurno(campos, indice);
+                } else if (encabezado.equalsIgnoreCase("tiradados")) {
+                    cargarTiradados(campos, indice);
+                } else if (encabezado.equalsIgnoreCase("avanza")) {
+                    cargarAvanza(campos, indice);
+                } else if (encabezado.equalsIgnoreCase("retrocede")) {
+                    cargarRetrocede(campos, indice);
+                } else if (encabezado.equalsIgnoreCase("subida")) {
+                    cargarSubida(campos, indice);
+                } else if (encabezado.equalsIgnoreCase("bajada")) {
+                    cargarBajada(campos, indice);
+                } else {
+                    throw new MisExcepciones("Esta instruccion no existe");
+                }
+            } else {
+                this.terminar = true;
+                throw new MisExcepciones("La primera instruccion debe ser el tablero");
+            }
         }
     }
 
-    private void cargarTablero(ArrayList<String> campos) {
-        tablero.setFilas(Integer.valueOf(campos.get(0)));
-        tablero.setColumnas(Integer.valueOf(campos.get(1)));
-        seCreoTablero = tablero.crearTablero();
+    private void cargarTablero(ArrayList<String> campos, int indice) throws MisExcepciones {
+
+        if (campos.size() != 2) {
+            throw new MisExcepciones("Debes indicar el numero de filas y columnas tablero(filas,columnas)");
+        }
+
+        try {
+            tablero.setFilas(Integer.valueOf(campos.get(0)));
+            tablero.setColumnas(Integer.valueOf(campos.get(1)));
+            seCreoTablero = tablero.crearTablero();
+        } catch (NumberFormatException e) {
+            throw new MisExcepciones("Debes ingresar numeros enteros Ej: tablero(5,6)");
+        }
     }
 
-    private void cargarPierdeTurno(ArrayList<String> campos) {
-        Especial especial = new PierdeTurno(ventanaPrincipal);
-        int fila = Integer.valueOf(campos.get(0));
-        int columna = Integer.valueOf(campos.get(1));
-        tablero.asignarEspecial(especial, fila, columna);
+    private void cargarPierdeTurno(ArrayList<String> campos, int indice) throws MisExcepciones {
+
+        if (campos.size() != 2) {
+            throw new MisExcepciones("Numero de campos incorrecto. Correcto: pierdeturno(numFila,numColumna)");
+        }
+
+        try {
+            Especial especial = new PierdeTurno(ventanaPrincipal);
+            int fila = Integer.valueOf(campos.get(0));
+            int columna = Integer.valueOf(campos.get(1));
+            tablero.asignarEspecial(especial, fila, columna);
+
+        } catch (NumberFormatException e) {
+            throw new MisExcepciones("Debes ingresar numeros enteros Ej: pierdeturno(2,1)");
+        }
     }
 
-    private void cargarTiradados(ArrayList<String> campos) {
-        Especial especial = new Tiradados();
-        int fila = Integer.valueOf(campos.get(0));
-        int columna = Integer.valueOf(campos.get(1));
-        tablero.asignarEspecial(especial, fila, columna);
+    private void cargarTiradados(ArrayList<String> campos, int indice) throws MisExcepciones {
+        if (campos.size() != 2) {
+            throw new MisExcepciones("Numero de campos incorrecto. Correcto: tiradados(numFila,numColumna)");
+        }
+
+        try {
+            Especial especial = new Tiradados();
+            int fila = Integer.valueOf(campos.get(0));
+            int columna = Integer.valueOf(campos.get(1));
+            tablero.asignarEspecial(especial, fila, columna);
+        } catch (NumberFormatException e) {
+            throw new MisExcepciones("Debes ingresar numeros enteros Ej: tiradados(1,3)");
+        }
+    }
+
+    private void cargarAvanza(ArrayList<String> campos, int indice) throws MisExcepciones {
+        if (campos.size() != 3) {
+            throw new MisExcepciones(
+                    "Numero de campos incorrecto. Correcto: avanza(numFila,numColumna,casillasAAvanzar)");
+        }
+
+        try {
+            int cantidadPosiciones = Integer.valueOf(campos.get(2));
+            Especial especial = new Avanza(cantidadPosiciones, this.tablero);
+            int fila = Integer.valueOf(campos.get(0));
+            int columna = Integer.valueOf(campos.get(1));
+            tablero.asignarEspecial(especial, fila, columna);
+        } catch (NumberFormatException e) {
+            throw new MisExcepciones("Debes ingresar numeros enteros Ej: avanza(0,4,5)");
+        }
 
     }
 
-    private void cargarAvanza(ArrayList<String> campos) {
-        int cantidadPosiciones = Integer.valueOf(campos.get(2));
-        Especial especial = new Avanza(cantidadPosiciones, this.tablero);
-        int fila = Integer.valueOf(campos.get(0));
-        int columna = Integer.valueOf(campos.get(1));
-        tablero.asignarEspecial(especial, fila, columna);
+    private void cargarRetrocede(ArrayList<String> campos, int indice) throws MisExcepciones {
+        if (campos.size() != 3) {
+            throw new MisExcepciones(
+                    "Numero de campos incorrecto. Correcto: retrocede(numFila,numColumna,CasillasARetroceder)");
+        }
+
+        try {
+            int cantidadPosiciones = Integer.valueOf(campos.get(2));
+            Especial especial = new Retrocede(cantidadPosiciones, this.tablero);
+            int fila = Integer.valueOf(campos.get(0));
+            int columna = Integer.valueOf(campos.get(1));
+            tablero.asignarEspecial(especial, fila, columna);
+        } catch (NumberFormatException e) {
+            throw new MisExcepciones("Debes ingresar numeros enteros Ej: retrocede(1,3,5)");
+        }
+    }
+
+    private void cargarSubida(ArrayList<String> campos, int indice) throws MisExcepciones {
+        if (campos.size() != 4) {
+            throw new MisExcepciones(
+                    "Numero de campos incorrecto. Correcto: subida(numFilaInicial,numColInicial,numFilaFin,numColFin)");
+        }
+
+        try {
+            int posicionInicialX = Integer.valueOf(campos.get(0));
+            int posicionInicialY = Integer.valueOf(campos.get(1));
+            int posicionFinalX = Integer.valueOf(campos.get(2));
+            int posicionFinalY = Integer.valueOf(campos.get(3));
+            Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY,
+                    this.tablero);
+            tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
+        } catch (NumberFormatException e) {
+            throw new MisExcepciones("Debes ingresar numeros enteros Ej: subida(2,3,1,3)");
+        }
 
     }
 
-    private void cargarRetrocede(ArrayList<String> campos) {
-        int cantidadPosiciones = Integer.valueOf(campos.get(2));
-        Especial especial = new Retrocede(cantidadPosiciones, this.tablero);
-        int fila = Integer.valueOf(campos.get(0));
-        int columna = Integer.valueOf(campos.get(1));
-        tablero.asignarEspecial(especial, fila, columna);
+    private void cargarBajada(ArrayList<String> campos, int indice) throws MisExcepciones {
+        if (campos.size() != 4) {
+            throw new MisExcepciones(
+                    "Numero de campos incorrecto. Correcto: bajada(numFilaInicial,numColInicial,numFilaFin,numColFin)");
+        }
 
+        try {
+            int posicionInicialX = Integer.valueOf(campos.get(0));
+            int posicionInicialY = Integer.valueOf(campos.get(1));
+            int posicionFinalX = Integer.valueOf(campos.get(2));
+            int posicionFinalY = Integer.valueOf(campos.get(3));
+
+            Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY,
+                    this.tablero);
+            tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
+
+        } catch (NumberFormatException e) {
+            throw new MisExcepciones("Debes ingresar numeros enteros Ej: bajada(1,3,2,3)");
+        }
     }
 
-    private void cargarSubida(ArrayList<String> campos) {
-        int posicionInicialX = Integer.valueOf(campos.get(0));
-        int posicionInicialY = Integer.valueOf(campos.get(1));
-        int posicionFinalX = Integer.valueOf(campos.get(2));
-        int posicionFinalY = Integer.valueOf(campos.get(3));
+    public ArrayList<String> extraerCampos(String lineaArchivo) throws MisExcepciones {
+        try {
+            ArrayList<String> lista;
+            String[] cadena;
+            String encabezado;
+            cadena = lineaArchivo.split("\\(");
+            String campos = lineaArchivo.substring(cadena[0].length() + 1, lineaArchivo.length() - 1);
+            String[] camposIndividuales = campos.split(",");
+            lista = convertirArregloAArrayList(camposIndividuales);
+            return lista;
 
-        Especial especial = new Subida(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, this.tablero);
-        tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
-
-    }
-
-    private void cargarBajada(ArrayList<String> campos) {
-        int posicionInicialX = Integer.valueOf(campos.get(0));
-        int posicionInicialY = Integer.valueOf(campos.get(1));
-        int posicionFinalX = Integer.valueOf(campos.get(2));
-        int posicionFinalY = Integer.valueOf(campos.get(3));
-
-        Especial especial = new Bajada(posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, this.tablero);
-        tablero.asignarEspecial(especial, posicionInicialX, posicionInicialY);
-    }
-
-    public ArrayList<String> extraerCampos(String lineaArchivo) {
-        ArrayList<String> lista;
-        String[] cadena;
-        String encabezado;
-        cadena = lineaArchivo.split("\\(");
-        String campos = lineaArchivo.substring(cadena[0].length() + 1, lineaArchivo.length() - 1);
-        String[] camposIndividuales = campos.split(",");
-        lista = convertirArregloAArrayList(camposIndividuales);
-        return lista;
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new MisExcepciones("Ingresa los campos  separalos con una coma");
+        }
     }
 
     private ArrayList<String> convertirArregloAArrayList(String[] arreglo) {

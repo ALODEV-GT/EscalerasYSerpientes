@@ -1,6 +1,7 @@
 package backend.clases;
 
 import backend.especiales.Especial;
+import backend.manejadores.MisExcepciones;
 
 public class Tablero {
     
@@ -37,14 +38,16 @@ public class Tablero {
         return tablero;
     }
 
-    public boolean crearTablero() {
+    public boolean crearTablero() throws MisExcepciones {
         boolean creado = false;
-        if (filas != 0 && columnas != 0) {
+        if (filas > 0 && columnas > 0) {
             posiciones = new Posicion[filas*columnas];
             tablero = new Casilla[filas][columnas];
             crearCasillas();
 
             creado = true;
+        }else{
+            throw new MisExcepciones("Ingresa valores mayores a cero tablero(filas,columnas)");
         }
 
         return creado;

@@ -1,7 +1,8 @@
 package frontend;
 
 import backend.clases.Jugador;
-import backend.clases.LecturaEscrituraArchivosBinario;
+import backend.manejadores.LecturaEscrituraArchivosBinario;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.Border;

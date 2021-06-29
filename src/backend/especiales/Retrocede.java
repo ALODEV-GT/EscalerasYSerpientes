@@ -3,7 +3,7 @@ package backend.especiales;
 import java.awt.Color;
 
 import backend.clases.Jugador;
-import backend.clases.Tablero;
+import backend.clases.Tablero; 
 
 public class Retrocede extends Serpiente {
 

@@ -114,7 +114,6 @@ public class AvisosFrt extends javax.swing.JDialog {
         bgbtnAceptarjPanel.setBackground(new Color(25,130,195));
     }//GEN-LAST:event_aceptarjLabelMouseExited
 
-    
     public static void mostrarMensaje(ManejadorVentanas parent, String mensaje ){
         AvisosFrt aviso = new AvisosFrt(parent, true , mensaje);
         aviso.setVisible(true);

@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import backend.clases.Jugador;
-import backend.clases.LecturaEscrituraArchivosBinario;
 import backend.clases.Posicion;
 import backend.clases.Tablero;
 import backend.especiales.PierdeTurno;

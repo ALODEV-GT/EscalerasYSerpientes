@@ -2,7 +2,7 @@ package backend.especiales;
 
 import backend.clases.Jugador;
 import backend.clases.Tablero;
-import java.awt.Color;
+import java.awt.Color; 
 
 public class Subida extends Escalera {
     private final String DESCRIPCION;

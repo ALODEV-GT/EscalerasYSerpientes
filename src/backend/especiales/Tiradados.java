@@ -2,7 +2,7 @@ package backend.especiales;
 
 import java.awt.Color;
 
-import backend.clases.Jugador;
+import backend.clases.Jugador; 
 
 public class Tiradados implements Especial{
     private final String DESCRIPCION = "<html><body>Vuelve <br>a tirar <br>el dado</body></html>";

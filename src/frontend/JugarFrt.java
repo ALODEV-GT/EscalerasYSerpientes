@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class JugarFrt extends javax.swing.JPanel {
@@ -24,6 +25,7 @@ public class JugarFrt extends javax.swing.JPanel {
     private ArrayList<Jugador> tJugadores;
     private int totalJugadores = 0;
     private JTextField[] idJugadores;
+    private JTextArea mostrarErrores;
 
     public JugarFrt(ManejadorVentanas parent) {
         this.parent = parent;
@@ -281,9 +283,13 @@ public class JugarFrt extends javax.swing.JPanel {
 
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChosser.getSelectedFile();
+            Errores errores = new Errores(parent, true);
+            this.mostrarErrores = errores.getMostrarErrores();
+            
             CargarDatos cargarDatos = new CargarDatos();
-            cargarDatos.cargarDatos(archivo.getAbsolutePath(), parent);
+            cargarDatos.cargarDatos(archivo.getAbsolutePath(), parent, this.mostrarErrores);
             this.tablero = cargarDatos.getTablero();
+            errores.setVisible(true);
         }
     }//GEN-LAST:event_btCargarjLabelMouseClicked
 
