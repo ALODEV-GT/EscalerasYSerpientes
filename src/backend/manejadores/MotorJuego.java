@@ -59,12 +59,14 @@ public class MotorJuego {
     }
 
     private class ManejarTurnos extends Thread {
+
         private Posicion[] posiciones = tablero.getPosiciones();
+        private boolean seActivoVolverATirar = false;
 
         public void run() {
 
             mostrarNumDado.setText("");
-            int numTurno = 0;            
+            int numTurno = 0;
             do {
                 if (numTurno == jugadores.length) {
                     numTurno = 0;
@@ -75,7 +77,7 @@ public class MotorJuego {
                 } else {
 
                     mostrarTurnoDe.setText(
-                            "<html><body>Es turno de: <br>" + jugadores[numTurno].getNombre() + "<br> " + jugadores[numTurno].getApellido()+"</body></html>");
+                            "<html><body>Es turno de: <br>" + jugadores[numTurno].getNombre() + "<br> " + jugadores[numTurno].getApellido() + "</body></html>");
 
                     fichaTurno.setIcon(jugadores[numTurno].getMiFicha().getFichaGrande());
                     while (!yaEligio) {
@@ -98,8 +100,9 @@ public class MotorJuego {
 
                             if (posiciones[jugadores[numTurno].getPosicionActual()].getCasilla()
                                     .getEspecial() instanceof Tiradados) {
-                                numTurno--;
-                                AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
+                                        this.seActivoVolverATirar = true;
+                                        AvisosFrt.mostrarMensaje(parent, "Vuelve a tirar el dado");
+                                        
                             } else {
                                 for (int i = 0; i < 1; i++) {
                                     try {
@@ -118,6 +121,11 @@ public class MotorJuego {
                             terminado = true;
                             ganador = jugadores[numTurno];
                         }
+
+                        if (this.seActivoVolverATirar) {
+                            numTurno--;
+                            this.seActivoVolverATirar = false;
+                        }
                     }
 
                 }
@@ -132,7 +140,7 @@ public class MotorJuego {
                     jugadores[i].agregarPartidaPerdida();
                 }
                 jugadores[i].agregarPartidaJugada();
-                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/"+jugadores[i].getId()+".bin");
+                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/" + jugadores[i].getId() + ".bin");
                 escritura.escribirArchivoBin(jugadores[i]);
             }
         }
@@ -146,7 +154,6 @@ public class MotorJuego {
     }
 
     // INICIO ASIGNAR TURNOS ALEATORIMANTE
-
     private void asignarTurno() {
         int[] turnosAsignados = new int[jugadores.length];
         boolean existe;
@@ -168,9 +175,9 @@ public class MotorJuego {
             for (int j = i; j > 0; j--) {
 
                 if (ascendente) {
-                    cambio = jugadores[j].getNumTurno() < jugadores[j-1].getNumTurno();
+                    cambio = jugadores[j].getNumTurno() < jugadores[j - 1].getNumTurno();
                 } else {
-                    cambio = jugadores[j].getNumTurno() > jugadores[j-1].getNumTurno();
+                    cambio = jugadores[j].getNumTurno() > jugadores[j - 1].getNumTurno();
                 }
 
                 if (cambio) {
@@ -204,5 +211,4 @@ public class MotorJuego {
     }
 
     // FIN ASIGNAR TURNOS ALEATORIAMENTE
-
 }
