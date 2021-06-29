@@ -23,9 +23,11 @@ public class MotorJuego {
     private ManejadorVentanas parent;
     private Jugador ganador;
     private JLabel espacioDado;
+    private JLabel fichaTurno;
 
     public MotorJuego(Jugador[] jugadores, JLabel mostrarNumDado, JLabel mostrarTurnoDe, Tablero tablero,
-            ManejadorVentanas parent, JLabel espacioDado) {
+            ManejadorVentanas parent, JLabel espacioDado, JLabel fichaTurno) {
+        this.fichaTurno = fichaTurno;
         this.espacioDado = espacioDado;
         this.parent = parent;
         this.mostrarNumDado = mostrarNumDado;
@@ -83,7 +85,9 @@ public class MotorJuego {
                 } else {
 
                     mostrarTurnoDe.setText(
-                            "Es turno de " + jugadores[numTurno].getNombre() + " " + jugadores[numTurno].getApellido());
+                            "<html><body>Es turno de: <br>" + jugadores[numTurno].getNombre() + "<br> " + jugadores[numTurno].getApellido()+"</body></html>");
+
+                    fichaTurno.setIcon(jugadores[numTurno].getMiFicha().getFichaGrande());
                     while (!yaEligio) {
                         try {
                             sleep(100);
@@ -130,7 +134,7 @@ public class MotorJuego {
                 numTurno++;
 
             } while (!terminado);
-            AvisosFrt.mostrarMensaje(parent, "GANO " + ganador.getNombre() + " " + ganador.getApellido());
+            AvisosFrt.mostrarMensaje(parent, "Ganador: " + ganador.getNombre() + " " + ganador.getApellido());
             ganador.agregarPartidaGanada();
             espacioDado.setIcon(new ImageIcon("src/resources/home.png"));
             for (int i = 0; i < jugadores.length; i++) {
