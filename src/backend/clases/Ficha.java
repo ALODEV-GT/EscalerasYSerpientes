@@ -1,8 +1,10 @@
 package backend.clases;
 
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
-public class Ficha {
+public class Ficha implements Serializable {
 
     public static int numColoresUsados = 0;
     private Jugador jugador;

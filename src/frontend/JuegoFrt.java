@@ -16,7 +16,6 @@ public class JuegoFrt extends javax.swing.JPanel {
     private Jugador[] jugadores;
     private boolean dadoEnMovimiento = false;
     private boolean partidaEnCurso = true;
-    
 
     public JuegoFrt(ManejadorVentanas parent, Tablero tablero, Jugador[] jugadores) {
         //this.jugadores = jugadores;
@@ -27,19 +26,19 @@ public class JuegoFrt extends javax.swing.JPanel {
         contenedor.setLayout(new GridLayout(this.tablero.getFilas(), this.tablero.getColumnas()));
         contenedor.setPreferredSize(new Dimension(70 * this.tablero.getFilas(), 55 * this.tablero.getColumnas()));
         dibujarTablero();
-        
-        motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero, this.parent,  this.dadojLabel, this.fichaTurnojLabel);
+
+        motor = new MotorJuego(jugadores, mostrarNumDado, mostrarTurnoDe, tablero, this.parent, this.dadojLabel, this.fichaTurnojLabel);
         TiempoPartida tiempo = new TiempoPartida();
         tiempo.start();
     }
-    
-    private void reiniciarValoresJugadores(Jugador[] jugadores){
+
+    private void reiniciarValoresJugadores(Jugador[] jugadores) {
         for (int i = 0; i < jugadores.length; i++) {
             jugadores[i].reiniciarValores();
         }
     }
-    
-    private void dibujarTablero(){
+
+    private void dibujarTablero() {
         Casilla[][] tablero = this.tablero.getTablero();
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
@@ -196,31 +195,31 @@ public class JuegoFrt extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void dadojLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dadojLabelMouseClicked
-        if(dadoEnMovimiento){
-            dadojLabel.setIcon(new ImageIcon("src/resources/parado.png") );
+        if (dadoEnMovimiento) {
+            dadojLabel.setIcon(new ImageIcon("src/resources/parado.png"));
             dadoEnMovimiento = false;
             motor.setYaEligio(true);
-        }else{
-            dadojLabel.setIcon(new ImageIcon("src/resources/dado.gif") );
+        } else {
+            dadojLabel.setIcon(new ImageIcon("src/resources/dado.gif"));
             dadoEnMovimiento = true;
-            if(motor.getGanador() != null){
+            if (motor.getGanador() != null) {
                 partidaEnCurso = false;
                 parent.mostrarInicio(this);
             }
         }
     }//GEN-LAST:event_dadojLabelMouseClicked
 
-    private class TiempoPartida extends Thread{
-        
-         private int contador = 0;
-        
+    private class TiempoPartida extends Thread {
+
+        private int contador = 0;
+
         @Override
-        public void run(){
-            
-            while(partidaEnCurso){
+        public void run() {
+
+            while (partidaEnCurso) {
                 contador++;
-                tiempojLabel.setText(""+contador);
-                 try {
+                tiempojLabel.setText("" + contador);
+                try {
                     sleep(1000);
                 } catch (InterruptedException ex) {
                     System.err.println("Ocurrio un error en el hilo Contador");

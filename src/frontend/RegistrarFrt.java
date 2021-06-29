@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.clases.Jugador;
+import backend.clases.LecturaEscrituraArchivosBinario;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.Border;
@@ -230,6 +231,8 @@ public class RegistrarFrt extends javax.swing.JPanel {
         if (parent.getJugadores().isEmpty()) {
             Jugador jugador = new Jugador(id, nombre, apellido);
             parent.getJugadores().add(jugador);
+            LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/"+ jugador.getId()+".bin");
+            escritura.escribirArchivoBin(jugador);
             AvisosFrt.mostrarMensaje(parent, "Te has registrado correctamente");
             limpiar();
         } else {
@@ -248,18 +251,19 @@ public class RegistrarFrt extends javax.swing.JPanel {
                 idjTextField.setText("");
             } else {
                 parent.getJugadores().add(jugador);
+                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/" + jugador.getId()+".bin");
+                escritura.escribirArchivoBin(jugador);
                 AvisosFrt.mostrarMensaje(parent, "Te has registrado correctamente");
                 limpiar();
             }
         }
-        
     }//GEN-LAST:event_btnRegistrarjLabelMouseClicked
 
-        private void limpiar(){
-            idjTextField.setText("");
-            nombrejTextField.setText("");
-            apellidojTextField.setText("");
-        }
+    private void limpiar() {
+        idjTextField.setText("");
+        nombrejTextField.setText("");
+        apellidojTextField.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidojTextField;

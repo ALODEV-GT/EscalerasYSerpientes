@@ -1,6 +1,8 @@
 package backend.clases;
 
-public class Jugador {
+import java.io.Serializable;
+
+public class Jugador implements Serializable{
 
     private Ficha miFicha;
     private int id;
