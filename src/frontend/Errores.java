@@ -1,5 +1,6 @@
 package frontend;
 
+import java.awt.Color;
 import javax.swing.JTextArea;
 
 public class Errores extends javax.swing.JDialog {
@@ -21,12 +22,16 @@ public class Errores extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         espacioErroresjTextArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        bgAceptarjPanel = new javax.swing.JPanel();
+        btnAceptarjLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(255, 89, 94));
 
         espacioErroresjTextArea.setEditable(false);
+        espacioErroresjTextArea.setBackground(new java.awt.Color(255, 202, 58));
         espacioErroresjTextArea.setColumns(20);
         espacioErroresjTextArea.setFont(new java.awt.Font("Roboto Light", 0, 15)); // NOI18N
         espacioErroresjTextArea.setRows(5);
@@ -36,18 +41,33 @@ public class Errores extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ERRORES");
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("ACEPTAR");
+        bgAceptarjPanel.setBackground(new java.awt.Color(106, 76, 147));
+        bgAceptarjPanel.setForeground(new java.awt.Color(106, 76, 147));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+        btnAceptarjLabel.setFont(new java.awt.Font("Roboto Light", 0, 15)); // NOI18N
+        btnAceptarjLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnAceptarjLabel.setText("ACEPTAR");
+        btnAceptarjLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarjLabelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAceptarjLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAceptarjLabelMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout bgAceptarjPanelLayout = new javax.swing.GroupLayout(bgAceptarjPanel);
+        bgAceptarjPanel.setLayout(bgAceptarjPanelLayout);
+        bgAceptarjPanelLayout.setHorizontalGroup(
+            bgAceptarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnAceptarjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+        bgAceptarjPanelLayout.setVerticalGroup(
+            bgAceptarjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnAceptarjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -61,7 +81,7 @@ public class Errores extends javax.swing.JDialog {
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(195, 195, 195)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bgAceptarjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -72,7 +92,7 @@ public class Errores extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bgAceptarjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -90,12 +110,24 @@ public class Errores extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAceptarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarjLabelMouseClicked
+       this.dispose();
+    }//GEN-LAST:event_btnAceptarjLabelMouseClicked
+
+    private void btnAceptarjLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarjLabelMouseEntered
+        bgAceptarjPanel.setBackground(new Color(25, 130, 196));
+    }//GEN-LAST:event_btnAceptarjLabelMouseEntered
+
+    private void btnAceptarjLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarjLabelMouseExited
+        bgAceptarjPanel.setBackground(new Color(106, 76, 147));
+    }//GEN-LAST:event_btnAceptarjLabelMouseExited
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bgAceptarjPanel;
+    private javax.swing.JLabel btnAceptarjLabel;
     private javax.swing.JTextArea espacioErroresjTextArea;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
