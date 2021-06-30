@@ -32,8 +32,12 @@ public class Casilla {
         panel.setBackground(new Color(254, 195, 166));
         Border borde = new TitledBorder(new LineBorder(new Color(255, 146, 139)), "");
         panel.setBorder(borde);
+        
 
         label = new JLabel("" + numCasilla);
+        if (numCasilla == tablero.getColumnas()*tablero.getFilas()) {
+            label.setText("FIN");
+        }
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);
         label.setSize(55, 70);
