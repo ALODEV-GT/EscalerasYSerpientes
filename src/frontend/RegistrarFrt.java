@@ -225,38 +225,45 @@ public class RegistrarFrt extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegistrarjLabelMouseExited
 
     private void btnRegistrarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarjLabelMouseClicked
-        int id = Integer.valueOf(idjTextField.getText());
-        String nombre = nombrejTextField.getText();
-        String apellido = apellidojTextField.getText();
+        try {
 
-        if (parent.getJugadores().isEmpty()) {
-            Jugador jugador = new Jugador(id, nombre, apellido);
-            parent.getJugadores().add(jugador);
-            LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/"+ jugador.getId()+".bin");
-            escritura.escribirArchivoBin(jugador);
-            AvisosFrt.mostrarMensaje(parent, "Te has registrado correctamente");
-            limpiar();
-        } else {
-            boolean existe = false;
+            int id = Integer.valueOf(idjTextField.getText());
+            String nombre = nombrejTextField.getText();
+            String apellido = apellidojTextField.getText();
 
-            Jugador jugador = new Jugador(id, nombre, apellido);
-
-            for (int i = 0; i < parent.getJugadores().size(); i++) {
-                if (jugador.equals(parent.getJugadores().get(i))) {
-                    existe = true;
-                }
-            }
-
-            if (existe) {
-                AvisosFrt.mostrarMensaje(parent, "Un usuario ya uso este id");
-                idjTextField.setText("");
-            } else {
+            if (parent.getJugadores().isEmpty()) {
+                Jugador jugador = new Jugador(id, nombre, apellido);
                 parent.getJugadores().add(jugador);
-                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/" + jugador.getId()+".bin");
+                LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/" + jugador.getId() + ".bin");
                 escritura.escribirArchivoBin(jugador);
                 AvisosFrt.mostrarMensaje(parent, "Te has registrado correctamente");
                 limpiar();
+            } else {
+                boolean existe = false;
+
+                Jugador jugador = new Jugador(id, nombre, apellido);
+
+                for (int i = 0; i < parent.getJugadores().size(); i++) {
+                    if (jugador.equals(parent.getJugadores().get(i))) {
+                        existe = true;
+                    }
+                }
+
+                if (existe) {
+                    AvisosFrt.mostrarMensaje(parent, "Un usuario ya uso este id");
+                    idjTextField.setText("");
+                } else {
+                    parent.getJugadores().add(jugador);
+                    LecturaEscrituraArchivosBinario<Jugador> escritura = new LecturaEscrituraArchivosBinario<>("src/binarios/" + jugador.getId() + ".bin");
+                    escritura.escribirArchivoBin(jugador);
+                    AvisosFrt.mostrarMensaje(parent, "Te has registrado correctamente");
+                    limpiar();
+                }
             }
+
+        } catch (NumberFormatException e) {
+            idjTextField.setText("");
+            AvisosFrt.mostrarMensaje(parent, "En el id, solo se admite numeros");
         }
     }//GEN-LAST:event_btnRegistrarjLabelMouseClicked
 

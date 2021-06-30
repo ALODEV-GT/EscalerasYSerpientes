@@ -285,7 +285,7 @@ public class JugarFrt extends javax.swing.JPanel {
             File archivo = fileChosser.getSelectedFile();
             Errores errores = new Errores(parent, true);
             this.mostrarErrores = errores.getMostrarErrores();
-            
+
             CargarDatos cargarDatos = new CargarDatos();
             cargarDatos.cargarDatos(archivo.getAbsolutePath(), parent, this.mostrarErrores);
             this.tablero = cargarDatos.getTablero();
@@ -346,33 +346,42 @@ public class JugarFrt extends javax.swing.JPanel {
     }//GEN-LAST:event_btCargarjLabelMouseExited
 
     private void btAceptarjLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAceptarjLabelMouseClicked
-        boolean existe = evaluarSiIdExisten();
+        try {
+            boolean existe = evaluarSiIdExisten();
 
-        if (existe) {
-            
-        } else {
-            elegirJugadores();
-            JuegoFrt juego = new JuegoFrt(parent, tablero, jugadores);
-            this.setVisible(false);
-            juego.setVisible(true);
-            parent.cambiarVentana(juego);
+            if (existe) {
+
+            } else {
+                elegirJugadores();
+                
+                try{
+                JuegoFrt juego = new JuegoFrt(parent, tablero, jugadores);
+                this.setVisible(false);
+                juego.setVisible(true);
+                parent.cambiarVentana(juego);
+                }catch(NullPointerException e){
+                    AvisosFrt.mostrarMensaje(parent, "Debes cargar el tablero");
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            AvisosFrt.mostrarMensaje(parent, "Verifica que ingresaste bien los id ");
         }
     }//GEN-LAST:event_btAceptarjLabelMouseClicked
 
-    public void elegirJugadores(){
+    public void elegirJugadores() {
         for (int i = 0; i < jugadores.length; i++) {
             for (int j = 0; j < tJugadores.size(); j++) {
-                if(tJugadores.get(j).getId() ==  Integer.valueOf(idJugadores[i].getText())){
+                if (tJugadores.get(j).getId() == Integer.valueOf(idJugadores[i].getText())) {
                     jugadores[i] = tJugadores.get(j);
                 }
             }
         }
     }
-    
-    
-    public boolean evaluarSiIdExisten() {
-        boolean existe = true;
+
+    public boolean evaluarSiIdExisten() throws NumberFormatException {
         boolean mostrarMensaje = false;
+        boolean existe = true;
         String texto = "No existe el id do los jugadores";
         for (int i = 0; i < idJugadores.length; i++) {
             existe = buscarSiExiste(Integer.valueOf(idJugadores[i].getText()));
