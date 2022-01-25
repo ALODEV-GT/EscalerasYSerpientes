@@ -61,5 +61,5 @@ ant
 ```bash
 java -jar ./dist/EscalerasYSerpientes.jar
 ```
-### Nota:
+### Importante:
 Crear un directorio con el nombre <b>binarios</b> dentro del directorio src
