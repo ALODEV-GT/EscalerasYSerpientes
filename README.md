@@ -52,3 +52,14 @@ subida(0,4,2,6)
 retrocede(0,6,6)
 
 avanza(0,7,1)
+
+## Compilacion
+```bash
+ant
+```
+## Ejecucion
+```bash
+java -jar ./dist/EscalerasYSerpientes.jar
+```
+### Nota:
+Crear un directorio con el nombre <b>binarios</b> dentro del directorio src
