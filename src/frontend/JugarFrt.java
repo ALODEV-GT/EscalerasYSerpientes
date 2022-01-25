@@ -190,6 +190,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btn1.setText("1");
         btn1.setBorder(null);
         btn1.setBorderPainted(false);
+        btn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn1.setPreferredSize(new java.awt.Dimension(100, 100));
         jPanel8.add(btn1, new java.awt.GridBagConstraints());
 
@@ -199,6 +200,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btn2.setText("2");
         btn2.setBorder(null);
         btn2.setBorderPainted(false);
+        btn2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn2.setPreferredSize(new java.awt.Dimension(100, 100));
         jPanel8.add(btn2, new java.awt.GridBagConstraints());
 
@@ -208,6 +210,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btn3.setText("3");
         btn3.setBorder(null);
         btn3.setBorderPainted(false);
+        btn3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn3.setPreferredSize(new java.awt.Dimension(100, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -220,6 +223,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btn5.setText("5");
         btn5.setBorder(null);
         btn5.setBorderPainted(false);
+        btn5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn5.setPreferredSize(new java.awt.Dimension(100, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -232,6 +236,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btn6.setText("6");
         btn6.setBorder(null);
         btn6.setBorderPainted(false);
+        btn6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn6.setPreferredSize(new java.awt.Dimension(100, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -244,6 +249,7 @@ public class JugarFrt extends javax.swing.JPanel {
         btn4.setText("4");
         btn4.setBorder(null);
         btn4.setBorderPainted(false);
+        btn4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn4.setPreferredSize(new java.awt.Dimension(100, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;

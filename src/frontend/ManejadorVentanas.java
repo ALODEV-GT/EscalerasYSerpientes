@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 
 public class ManejadorVentanas extends javax.swing.JFrame {
 
+    int xMouse;
+    int yMouse;
     InicioFrtd inicio = new InicioFrtd(this);
     private ArrayList<Jugador> jugadores = new ArrayList<>();
 
@@ -62,7 +64,6 @@ public class ManejadorVentanas extends javax.swing.JFrame {
         cerrarjLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(850, 550));
         setMinimumSize(new java.awt.Dimension(850, 550));
         setUndecorated(true);
         setResizable(false);
@@ -72,6 +73,16 @@ public class ManejadorVentanas extends javax.swing.JFrame {
 
         headjPanel.setBackground(new java.awt.Color(106, 76, 147));
         headjPanel.setPreferredSize(new java.awt.Dimension(850, 40));
+        headjPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headjPanelMouseDragged(evt);
+            }
+        });
+        headjPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headjPanelMousePressed(evt);
+            }
+        });
 
         bgCerrarjPanel.setBackground(new java.awt.Color(106, 76, 147));
         bgCerrarjPanel.setForeground(new java.awt.Color(254, 254, 254));
@@ -144,6 +155,17 @@ public class ManejadorVentanas extends javax.swing.JFrame {
         bgCerrarjPanel.setBackground(new Color(106, 76, 147));
         cerrarjLabel.setForeground(Color.white);
     }//GEN-LAST:event_cerrarjLabelMouseExited
+
+    private void headjPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headjPanelMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_headjPanelMousePressed
+
+    private void headjPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headjPanelMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_headjPanelMouseDragged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgCerrarjPanel;
