@@ -1,7 +1,7 @@
 # Escaleras y serpientes
 
 ## Descripcion
-Juego de escaleras y serpientes, se puede jugar de 1-6 jugadores, el tablero es creado de acuerdo a las instrucciones de un archivo de entrada (Puedes crear tus propios archivo para tener tableros personalizados).
+Juego de escaleras y serpientes, se puede jugar de 1-6 jugadores, el tablero es creado de acuerdo a las instrucciones de un archivo de entrada (Puedes crear tus propios archivos para tener tableros personalizados).
 
 - Programacion orientada a objetos
 - Hilos
