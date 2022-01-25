@@ -1,6 +1,6 @@
 *.class
-nbproject/
 /build/
 *.pdf
 *.bin
 EscalerasYSerpientes.jpg
+/dist/
